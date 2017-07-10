@@ -39,11 +39,24 @@ class Exam(models.Model):
 class Event(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     event_name = models.CharField(max_length=200)
-    event_area = models.CharField(max_length=200, choices=[
+    event_area = models.CharField(max_length=31, choices=[
         ('kmd', 'Культурно-массовая деятельность'),
         ('sd', 'Спортивная деятельность'),
         ('nd', 'Научная деятельность'),
         ('od', 'Общественная деятельность'),
+    ])
+    event_level = models.CharField(max_length=23, choices=[
+        ('ml', 'Международный уровень'),
+        ('rl', 'Всероссийский уровень'),
+        ('rl', 'Региональный уровень'),
+        ('gl', 'Городской уровень'),
+        ('ul', 'Университетский уровень'),
+    ])
+    prize_wining_place = models.CharField(max_length=7, choices=[
+        ('1', '1 место'),
+        ('2', '2 место'),
+        ('3', '3 место'),
+        ('4', 'участие'),
     ])
 
     def __str__(self):
