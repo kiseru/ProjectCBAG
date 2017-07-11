@@ -8,14 +8,13 @@ def log_in(request):
     if request.method == 'GET':
         return render(request, 'authorization/login.html')
     elif request.method == 'POST':
-        email = request.POST['email']
+        username = request.POST['username']
         password = request.POST['password']
-        user = authenticate(username=email, password=password)
+        user = authenticate(username=username, password=password)
         if user is not None:
-            if user.is_active:
-                login(request, user)
-                return redirect(request, '/')
-            else:
-                return redirect(request, '/login/')
+            login(request, user)
+            return HttpResponse('Success')
+        else:
+            return HttpResponse('Fail')
     else:
         return Http404()
