@@ -24,12 +24,42 @@ class ExamResultInline(admin.TabularInline):
 
 
 class AcademicGroupAdmin(admin.ModelAdmin):
+    list_display = [
+        'name',
+        'course',
+        'institute',
+    ]
+
+    search_fields = [
+        'name',
+    ]
+
+    list_filter = [
+        'course',
+        'institute',
+    ]
+
     inlines = [
         StudentInline,
     ]
 
 
 class StudentAdmin(admin.ModelAdmin):
+    list_display = [
+        'name',
+        'academic_group',
+        'educational_form',
+    ]
+
+    search_fields = [
+        'name',
+    ]
+
+    list_filter = [
+        'academic_group',
+        'educational_form',
+    ]
+
     inlines = [
         ExamResultInline,
     ]
@@ -41,7 +71,7 @@ class CuratorAdmin(admin.ModelAdmin):
     ]
 
 
-admin.site.register(models.AcademicGroup)
+admin.site.register(models.AcademicGroup, AcademicGroupAdmin)
 admin.site.register(models.Student, StudentAdmin)
 admin.site.register(models.Curator)
 admin.site.register(models.EducationalForm)
