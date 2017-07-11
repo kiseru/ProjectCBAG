@@ -1,63 +1,95 @@
 from django.db import models
 
 
-class AcademicGroup(models.Model):
-    institute = models.CharField(max_length=200)
-    course = models.PositiveSmallIntegerField()
-    academic_group_name = models.CharField(max_length=6)
-    starosta = models.CharField(max_length=50)
-    starosta_email = models.CharField(max_length=50)
-    starosta_phone_number = models.CharField(max_length=12)
-    curator = models.CharField(max_length=50)
-    student_count = models.IntegerField()
+class Curator(models.Model):
+    name = models.CharField(max_length=50)
 
     def __str__(self):
-        return self.academic_group_name
+        return self.name
 
 
-class Student(models.Model):
-    academic_group = models.ForeignKey(AcademicGroup, on_delete=models.CASCADE)
-    student_name = models.CharField(max_length=50)
-    educational_form = models.CharField(max_length=8, choices=[
-        ('b', 'бюджет'),
-        ('k', 'контракт'),
-    ])
+class EducationalForm(models.Model):
+    name = models.CharField(max_length=8)
 
     def __str__(self):
-        return self.student_name
+        return self.name
 
 
 class Exam(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    exam_name = models.CharField(max_length=50)
-    score = models.IntegerField(default=0)
+    name = models.CharField(max_length=50)
 
     def __str__(self):
-        return self.exam_name
+        return self.name
+
+
+class PrizeWinningPlace(models.Model):
+    place = models.CharField(max_length=7)
+
+    def __str__(self):
+        return self.place
+
+
+class EventArea(models.Model):
+    name = models.CharField(max_length=31)
+
+    def __str__(self):
+        return self.name
+
+
+class EventLevel(models.Model):
+    name = models.CharField(max_length=23)
+
+    def __str__(self):
+        return self.name
+
+
+class AcademicGroup(models.Model):
+    institute = models.CharField(max_length=200)
+    course = models.PositiveSmallIntegerField()
+    name = models.CharField(max_length=6)
+    starosta = models.OneToOneField("Student")
+    starosta_email = models.CharField(max_length=50)
+    starosta_phone_number = models.CharField(max_length=12)
+    curator = models.ForeignKey(Curator, on_delete=models.CASCADE)
+    student_count = models.IntegerField()
+
+    def __str__(self):
+        return self.name
+
+
+class Student(models.Model):
+    name = models.CharField(max_length=50)
+    educational_form = models.ForeignKey(EducationalForm, on_delete=models.CASCADE)
+    academic_group = models.ForeignKey(AcademicGroup, on_delete=models.CASCADE)
+    student_exam = models.ManyToManyField(Exam, through='ExamResult', through_fields=('student', 'exam'))
+
+    def __str__(self):
+        return self.name
+
+
+class ExamResult(models.Model):
+    score = models.PositiveSmallIntegerField(default=0)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.score
+
+
+class EventGroup(models.Model):
+    name = models.CharField(max_length=30)
+    prize_winning_place = models.ForeignKey(PrizeWinningPlace, on_delete=models.CASCADE)
+    student_event = models.ManyToManyField(Student)
+
+    def __str__(self):
+        return self.name
 
 
 class Event(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    event_name = models.CharField(max_length=200)
-    event_area = models.CharField(max_length=31, choices=[
-        ('kmd', 'Культурно-массовая деятельность'),
-        ('sd', 'Спортивная деятельность'),
-        ('nd', 'Научная деятельность'),
-        ('od', 'Общественная деятельность'),
-    ])
-    event_level = models.CharField(max_length=23, choices=[
-        ('ml', 'Международный уровень'),
-        ('rl', 'Всероссийский уровень'),
-        ('rl', 'Региональный уровень'),
-        ('gl', 'Городской уровень'),
-        ('ul', 'Университетский уровень'),
-    ])
-    prize_wining_place = models.CharField(max_length=7, choices=[
-        ('1', '1 место'),
-        ('2', '2 место'),
-        ('3', '3 место'),
-        ('4', 'участие'),
-    ])
+    name = models.CharField(max_length=200)
+    event_group = models.ForeignKey(EventGroup)
+    event_area = models.ForeignKey(EventArea, on_delete=models.CASCADE)
+    event_level = models.ForeignKey(EventLevel, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.event_name
+        return self.name

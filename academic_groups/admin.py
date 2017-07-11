@@ -18,49 +18,36 @@ class EventInline(admin.TabularInline):
     extra = 0
 
 
+class ExamResultInline(admin.TabularInline):
+    model = models.ExamResult
+    extra = 0
+
+
 class AcademicGroupAdmin(admin.ModelAdmin):
-    list_display = [
-        'academic_group_name',
-        'course',
-        'institute',
-        'student_count'
-    ]
-
-    list_filter = [
-        'institute',
-    ]
-
-    search_fields = [
-        'academic_group_name',
-    ]
-
     inlines = [
         StudentInline,
     ]
 
 
 class StudentAdmin(admin.ModelAdmin):
-    list_display = [
-        'student_name',
-        'academic_group',
-        'educational_form',
-    ]
-
-    list_filter = [
-        'academic_group',
-        'educational_form',
-    ]
-
-    search_fields = [
-        'student_name',
-        'academic_group',
-    ]
-
     inlines = [
-        ExamInline,
-        EventInline,
+        ExamResultInline,
     ]
 
 
-admin.site.register(models.AcademicGroup, AcademicGroupAdmin)
+class CuratorAdmin(admin.ModelAdmin):
+    inlines = [
+        StudentInline,
+    ]
+
+
+admin.site.register(models.AcademicGroup)
 admin.site.register(models.Student, StudentAdmin)
+admin.site.register(models.Curator)
+admin.site.register(models.EducationalForm)
+admin.site.register(models.Exam)
+admin.site.register(models.Event)
+admin.site.register(models.EventGroup)
+admin.site.register(models.EventArea)
+admin.site.register(models.EventLevel)
+admin.site.register(models.PrizeWinningPlace)
