@@ -76,20 +76,20 @@ class ExamResult(models.Model):
         return self.score
 
 
-class EventGroup(models.Model):
-    name = models.CharField(max_length=30)
-    prize_winning_place = models.ForeignKey(PrizeWinningPlace, on_delete=models.CASCADE)
-    student_event = models.ManyToManyField(Student)
+class Event(models.Model):
+    name = models.CharField(max_length=200)
+    event_area = models.ForeignKey(EventArea, on_delete=models.CASCADE)
+    event_level = models.ForeignKey(EventLevel, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
 
 
-class Event(models.Model):
-    name = models.CharField(max_length=200)
-    event_group = models.ForeignKey(EventGroup)
-    event_area = models.ForeignKey(EventArea, on_delete=models.CASCADE)
-    event_level = models.ForeignKey(EventLevel, on_delete=models.CASCADE)
+class EventGroup(models.Model):
+    name = models.CharField(max_length=30)
+    prize_winning_place = models.ForeignKey(PrizeWinningPlace, on_delete=models.CASCADE)
+    student_event = models.ManyToManyField(Student)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
