@@ -1,9 +1,9 @@
-<form action="{% url 'authorization:log_in' %}" method="post">
+<form action="{% url 'auth:log_in' %}" method="post">
 
     {% csrf_token %}
 
-    <label for="email">E-mail: </label>
-    <input id="email" type="text" name="username"><br/>
+    <label for="username">Логин: </label>
+    <input id="username" type="text" name="username"><br/>
 
     <label for="password">Пароль: </label>
     <input id="password" type="password" name="password"><br/>

@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 # Create your views here.
 def log_in(request):
     if request.method == 'GET':
-        return render(request, 'authorization/login.html')
+        return render(request, 'authorization/log_in.html')
     elif request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
