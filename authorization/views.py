@@ -20,4 +20,4 @@ def log_in(request):
 
 def log_out(request):
     logout(request)
-    return redirect(request, '')
+    return redirect('/')
