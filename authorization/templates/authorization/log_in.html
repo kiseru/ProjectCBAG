@@ -1,13 +1,22 @@
-<form action="{% url 'auth:log_in' %}" method="post">
+{% extends 'pages/base.html' %}
 
-    {% csrf_token %}
+{% block content %}
+    <div class="content">
+        <div class="title_login">
+            <h2>Вход</h2>
 
-    <label for="username">Логин: </label>
-    <input id="username" type="text" name="username"><br/>
+            <form action="{% url 'auth:log_in' %}" method="post">
 
-    <label for="password">Пароль: </label>
-    <input id="password" type="password" name="password"><br/>
+                {% csrf_token %}
 
-    <input type="submit" value="Войти">
-    
-</form>
+                <label for="username">Логин</label><br/>
+                <input type="text" id="username" name="username"><br/>
+
+                <label for="password">Пароль</label><br/>
+                <input type="password" id="password" name="password"><br/><br/>
+
+                <button type="submit" value="Войти" class="btn btn-success btn-md">Войти</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
