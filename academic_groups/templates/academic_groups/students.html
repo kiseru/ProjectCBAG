@@ -36,8 +36,8 @@
                             </a>
                         </th>
 
-                        {% for exam in academic_group.exams.all %}
-                            <td>0</td>
+                        {% for examresult in student.examresult_set.all %}
+                            <td>{{ examresult.score }}</td>
                         {% endfor %}
 
                         <td>0</td>
