@@ -9,6 +9,12 @@ def home(request):
     context = {
         'first_name': user.first_name,
         'last_name': user.last_name,
+        'group': user.groups.get().name,
     }
+
+    if context['group'] == 'Starostas':
+        pass
+    elif context['group'] == 'Jury':
+        pass
 
     return render(request, 'pages/home.html', context)
