@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'pages.apps.PagesConfig',
+    'academic_groups.apps.AcademicGroupsConfig',
     'authorization.apps.AuthorizationConfig',
 ]
 
