@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http import Http404, HttpResponse
 from django.shortcuts import render, redirect
 
@@ -13,8 +13,11 @@ def log_in(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            return HttpResponse('Success')
-        else:
-            return HttpResponse('Fail')
+        return redirect('/')
     else:
         return Http404()
+
+
+def log_out(request):
+    logout(request)
+    return redirect(request, '')
