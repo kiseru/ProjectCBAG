@@ -92,3 +92,46 @@ body {
   height: 40px;
   background-color: #333333;
 }
+
+td, th {
+  text-align: center;
+}
+
+.header-button {
+    height: 65px;
+    width: 150px;
+    font-size: 20px;
+    color: white;
+    padding-top: 21px !important;
+}
+
+.header-button:hover, .user-table:hover {
+    background-color: #0b7e46 !important;
+    color: white;
+}
+
+.active-header-button {
+    background-color: #5cb85c;
+}
+
+.user-table {
+    height: 65px;
+    width: 200px;
+    font-size: 20px;
+    color: white;
+    padding-top: 21px !important;
+    float: right;
+}
+
+.log-out {
+    width: 200px;
+    height: 65px;
+    padding-top: 21px !important;
+    font-size: 15px;
+    text-align: center;
+}
+
+.log-out:hover {
+    background-color: #c4e3f3;
+    height: 65px;
+}

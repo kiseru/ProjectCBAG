@@ -15,6 +15,7 @@ def students(request):
 
     context = {
         'academic_group': academic_group,
+        'name': '{0} {1}'.format(user.first_name, user.last_name),
     }
 
     if user_group == 'Starostas':
@@ -36,6 +37,7 @@ def add_student(request):
         context = {
             'academic_group': academic_group,
             'educational_forms': models.EducationalForm.objects.all(),
+            'name': '{0} {1}'.format(user.first_name, user.last_name),
         }
 
         return render(request, 'academic_groups/add_student.html', context=context)

@@ -1,0 +1,14 @@
+{% extends 'pages/base.html' %}
+
+{% block header %}
+    <nav class="navbar navbar-top">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{% url 'home' %}">Project CB<i style="font-size: 30px"class="glyphicon glyphicon-text-background"></i>G
+            <i style="font-size: 40px"class="fa fa-university"></i></a>
+        </div>
+    </nav>
+
+    {% block content %}
+    {% endblock %}
+{% endblock %}
+
