@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'pages.apps.PagesConfig',
     'academic_groups.apps.AcademicGroupsConfig',
+    'authorization.apps.AuthorizationConfig',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,72 @@
+@font-face {
+font-family: 'PT Sans';
+src: url('../fonts/PTSans-Regular.ttf') format('truetype');
+font-weight: normal;
+font-style: normal;
+}
+
+@font-face {
+font-family: 'Righteous';
+src: url('../fonts/Righteous-Regular.ttf') format('truetype');
+font-weight: normal;
+font-style: normal;
+}
+
+body {
+  font-family: "PT Sans";
+}
+
+.navbar {
+  background: #0F9D58;
+  height: 65px;
+}
+
+.navbar-brand {
+  margin-left: 100px;
+  font-family: "Righteous";
+  font-size: 40px;
+  color: white;
+}
+
+.navbar-header > a:hover{
+  color: #fff;
+  text-shadow: 4px 0 0 #000;
+}
+
+.navbar-header > a:focus{
+  color: white;
+}
+
+.content {
+  box-shadow: 0 0 7px 0.5px;
+  margin: auto;
+  background: white;
+  height: 350px;
+  width: 300px;
+  padding-top: 20px;
+}
+
+.title_login {
+  text-align: center;
+}
+
+.title_login > h2 {
+  font-weight: bold;
+  color: #0F9D58;
+}
+
+.footer-line1 {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    background-color: #0F9D58;
+}
+
+.footer-line2 {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 20px;
+  background-color: #333333;
+}

@@ -1,0 +1,22 @@
+{% extends 'pages/base.html' %}
+
+{% block content %}
+    <div class="content">
+        <div class="title_login">
+            <h2>Вход</h2>
+
+            <form action="{% url 'auth:log_in' %}" method="post">
+
+                {% csrf_token %}
+
+                <label for="username">Логин</label><br/>
+                <input type="text" id="username" name="username"><br/>
+
+                <label for="password">Пароль</label><br/>
+                <input type="password" id="password" name="password"><br/><br/>
+
+                <button type="submit" value="Войти" class="btn btn-success btn-md">Войти</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

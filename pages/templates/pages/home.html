@@ -1,1 +1,12 @@
-<h1>Welcome</h1>
+{% extends 'pages/base.html' %}
+
+{% block content %}
+    <h2>Welcome!</h2>
+
+    <p>{{ first_name }}</p>
+    <p>{{ last_name }}</p>
+
+    <p>
+        <a href="{% url 'auth:log_out' %}">Log out!</a>
+    </p>
+{% endblock %}
