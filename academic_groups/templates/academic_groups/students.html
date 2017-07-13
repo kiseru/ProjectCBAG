@@ -1,0 +1,64 @@
+{% extends 'pages/base.html' %}
+
+{% block content %}
+
+    <div class="container shadow">
+        <h2>Результаты экзаменов</h2>
+        <p>Группа: {{ academic_group.name }}</p>
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr class="active">
+                    <th></th>
+                    <th colspan="6" >Экзамены</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <th>ФИО</th>
+
+                    {% for exam in academic_group.exams.all %}
+
+                        <td>
+                            {{ exam.name }}
+                        </td>
+
+                    {% endfor %}
+
+                    <th>Ср.балл</th>
+                </tr>
+
+                {% for student in academic_group.student_set.all %}
+                    <tr>
+                        <th>
+                            <a class="for-hover" href="#" data-toggle="tooltip" data-placement="bottom" title="Перейти к профилю">
+                                {{ student.name }}
+                            </a>
+                        </th>
+                        <td>0</td>
+                        <td>45</td>
+                        <td>35</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>16</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div style="text-align: right">
+            <a href="#">
+                <button type="button" name="button" class="btn btn-success">Добавить студента</button>
+            </a>
+
+            <a href="#">
+              <button type="button" name="button" class="btn btn-success">Добавить экзамен</button>
+            </a>
+
+            <a href="#">
+                <button type="button" name="button" class="btn btn-success">Обновить результаты экзаменов</button>
+            </a>
+        </div>
+
+    </div>
+{% endblock %}

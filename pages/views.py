@@ -13,7 +13,7 @@ def home(request):
     }
 
     if context['group'] == 'Starostas':
-        pass
+        return redirect('/academic_groups/students')
     elif context['group'] == 'Jury':
         pass
 

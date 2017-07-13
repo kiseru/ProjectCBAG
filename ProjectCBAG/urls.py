@@ -21,5 +21,6 @@ from pages import views
 urlpatterns = [
     url(r'^$', views.home, name='home'),
     url(r'^admin/', admin.site.urls),
-    url(r'^auth/', include('authorization.urls'))
+    url(r'^auth/', include('authorization.urls')),
+    url(r'^academic_groups/', include('academic_groups.urls')),
 ]

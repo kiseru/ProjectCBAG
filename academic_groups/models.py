@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Curator(models.Model):
@@ -47,9 +48,9 @@ class AcademicGroup(models.Model):
     institute = models.CharField(max_length=200)
     course = models.PositiveSmallIntegerField()
     name = models.CharField(max_length=6)
-    starosta = models.OneToOneField("Student")
-    starosta_email = models.CharField(max_length=50)
+    starosta = models.OneToOneField(User)
     starosta_phone_number = models.CharField(max_length=12)
+    exams = models.ManyToManyField(Exam)
     curator = models.ForeignKey(Curator, on_delete=models.CASCADE)
     student_count = models.IntegerField()
 
