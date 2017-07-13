@@ -1,0 +1,55 @@
+{% extends 'pages/base.html' %}
+
+{% block content %}
+
+    <div class="shadow adding-student">
+    <h3><b>Добавление студента:</b></h3>
+
+    <form method="post" action="{% url 'groups:add_student' %}">
+        <label for="last_name">
+            <b>Фамилия</b>
+        </label>
+        <br/>
+
+        <input type="text" id="last_name" name="last_name" size="35">
+        <br/>
+
+        <label for="first_name">
+            <b>Имя</b>
+        </label>
+        <br/>
+
+        <input type="text" id="first_name" name="first_name" size="35">
+        <br/>
+
+        <label for="father_first_name">
+            <b>Отчество</b>
+        </label>
+        <br/>
+
+        <input type="text" id="father_first_name" name="father_first_name" size="35">
+        <br/>
+        <br/>
+
+        <p><b>Экзамены</b></p>
+
+
+        {% for exam in academic_group.exams.all %}
+
+            <label for="{{ exam.id }}" name="{{ exam.id }}">{{ exam.name }}</label>
+            <br/>
+
+            <input type="number" id="{{ exam.id }}" size="20" value="0" style="text-align: center">
+            <br/>
+
+        {% endfor %}
+
+
+        <br/>
+
+        <input type="submit" class="btn btn-success" value="Добавить">
+    </form>
+
+</div>
+
+{% endblock %}

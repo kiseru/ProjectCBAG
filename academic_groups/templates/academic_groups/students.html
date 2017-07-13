@@ -35,24 +35,24 @@
                                 {{ student.name }}
                             </a>
                         </th>
+
+                        {% for exam in academic_group.exams.all %}
+                            <td>0</td>
+                        {% endfor %}
+
                         <td>0</td>
-                        <td>45</td>
-                        <td>35</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>16</td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
 
         <div style="text-align: right">
-            <a href="#">
+            <a href="{% url 'groups:add_student' %}">
                 <button type="button" name="button" class="btn btn-success">Добавить студента</button>
             </a>
 
             <a href="#">
-              <button type="button" name="button" class="btn btn-success">Добавить экзамен</button>
+                <button type="button" name="button" class="btn btn-success">Добавить экзамен</button>
             </a>
 
             <a href="#">

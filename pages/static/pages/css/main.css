@@ -38,6 +38,11 @@ body {
   color: white;
 }
 
+.shadow {
+  padding-bottom: 20px;
+  box-shadow: 0 0 7px 0.5px;
+}
+/* Students */
 .for-hover {
   color: black;
 }
@@ -46,7 +51,12 @@ body {
   color: #0F9D58;
 }
 
-
+.adding-student {
+  margin: auto;
+  padding: 30px 0 20px 0;
+  width: 30%;
+  text-align:center;
+}
 
 
 .content {
@@ -62,6 +72,13 @@ body {
   text-align: center;
 }
 
+.events-tabs {
+  float: right;
+  display: inline-block;
+  margin-right: 30px;
+  margin-bottom: 5px;
+}
+
 .title_login > h2 {
   font-weight: bold;
   color: #0F9D58;
@@ -73,7 +90,7 @@ body {
 
 
 .footer-line1 {
-    position: fixed !important;
+    position: fixed;
     bottom: 0;
     width: 100%;
     height: 60px;
@@ -81,14 +98,9 @@ body {
 }
 
 .footer-line2 {
-  position: fixed !important;
+  position: fixed;
   bottom: 0;
   width: 100%;
   height: 20px;
   background-color: #333333;
-}
-
-.shadow {
-  box-shadow: 0  0 7px 0.5px;
-  padding-bottom: 20px;
 }
