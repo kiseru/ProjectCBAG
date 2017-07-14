@@ -41,9 +41,8 @@
         <select class="custom-select" id="educational_form" name="educational_form">
            <option selected>Укажите форму обучения</option>
 
-            {% for educational_form in educational_forms %}
-                <option value="{{ educational_form.id }}">{{ educational_form.name }}</option>
-            {% endfor %}
+            <option value="Бюджет">Бюджет</option>
+            <option value="Контракт">Контрак</option>
 
          </select>
         <br/>
