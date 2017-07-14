@@ -10,6 +10,9 @@ class Curator(models.Model):
 
 
 class EducationalForm(models.Model):
+    """
+    List of educational forms
+    """
     name = models.CharField(max_length=8)
 
     def __str__(self):
@@ -17,6 +20,9 @@ class EducationalForm(models.Model):
 
 
 class Exam(models.Model):
+    """
+    List of exam
+    """
     name = models.CharField(max_length=50)
 
     def __str__(self):
@@ -24,7 +30,9 @@ class Exam(models.Model):
 
 
 class PrizeWinningPlace(models.Model):
-    """ Level of Prize - 1st, 2nd, 3rd, grand-pris"""
+    """
+    Level of Prize - 1st, 2nd, 3rd, grand-pris
+    """
     place = models.CharField(max_length=7)
 
     def __str__(self):
@@ -54,7 +62,7 @@ class AcademicGroup(models.Model):
     #validator
     starosta_phone_number = models.CharField(max_length=12)
     exams = models.ManyToManyField(Exam)
-    curator = models.ForeignKey(Curator, on_delete=models.CASCADE)
+    curator = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
