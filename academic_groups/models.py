@@ -2,21 +2,10 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-class Curator(models.Model):
-    name = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.name
-
-
-class EducationalForm(models.Model):
-    name = models.CharField(max_length=8)
-
-    def __str__(self):
-        return self.name
-
-
 class Exam(models.Model):
+    """
+    List of exam
+    """
     name = models.CharField(max_length=50)
 
     def __str__(self):
@@ -24,6 +13,9 @@ class Exam(models.Model):
 
 
 class PrizeWinningPlace(models.Model):
+    """
+    Level of Prize - 1st, 2nd, 3rd, grand-pris
+    """
     place = models.CharField(max_length=7)
 
     def __str__(self):
@@ -46,13 +38,14 @@ class EventLevel(models.Model):
 
 class AcademicGroup(models.Model):
     institute = models.CharField(max_length=200)
-    course = models.PositiveSmallIntegerField()
+    course = models.PositiveSmallIntegerField(default=1)
     name = models.CharField(max_length=6)
     starosta = models.OneToOneField(User)
+
+    #validator
     starosta_phone_number = models.CharField(max_length=12)
     exams = models.ManyToManyField(Exam)
-    curator = models.ForeignKey(Curator, on_delete=models.CASCADE)
-    student_count = models.IntegerField()
+    curator = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
@@ -60,9 +53,10 @@ class AcademicGroup(models.Model):
 
 class Student(models.Model):
     name = models.CharField(max_length=50)
-    educational_form = models.ForeignKey(EducationalForm, on_delete=models.CASCADE)
+    educational_form = models.CharField(max_length=8)
     academic_group = models.ForeignKey(AcademicGroup, on_delete=models.CASCADE)
     student_exam = models.ManyToManyField(Exam, through='ExamResult', through_fields=('student', 'exam'))
+    average_score = models.PositiveSmallIntegerField(default=0)
 
     def __str__(self):
         return self.name

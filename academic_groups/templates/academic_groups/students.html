@@ -9,7 +9,7 @@
             <thead>
                 <tr class="active">
                     <th></th>
-                    <th colspan="6" >Экзамены</th>
+                    <th colspan="{{ academic_group.exams.count }}" >Экзамены</th>
                 </tr>
             </thead>
 
@@ -51,9 +51,44 @@
                 <button type="button" name="button" class="btn btn-success">Добавить студента</button>
             </a>
 
-            <a href="#">
-                <button type="button" name="button" class="btn btn-success">Добавить экзамен</button>
-            </a>
+            <button class="btn btn-success" data-toggle="modal" data-target="#myModal">Добавить экзамен</button>
+
+            <div id="myModal" class="modal fade" tabindex="-1" style="margin: auto; text-align: center">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                            <form action="{% url 'groups:add_exam' %}" method="post">
+
+                                {% csrf_token %}
+
+                                <div class="modal-header">
+                                    <button class="close" data-dismiss="modal">х</button>
+                                    <h4 class="modal-title">Добавить экзамен</h4>
+                                </div>
+
+                                <div class="modal-body">
+                                    <label for="name">Название</label><br/>
+                                    <select name="exam_id" id="name" style="width: 100%;">
+                                        <option selected>Выберите экзамен</option>
+
+                                        {% for exam in exams %}
+
+                                            {% if not academic_group in exam.academicgroup_set.all %}
+                                                <option value="{{ exam.id }}">{{ exam.name }}</option>
+                                            {% endif %}
+
+                                        {% endfor %}
+
+                                    </select>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <input type="submit" class="btn btn-success" value="Добавить">
+                                    <button class="btn btn-danger" data-dismiss="modal">Закрыть</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
 
             <a href="#">
                 <button type="button" name="button" class="btn btn-success">Обновить результаты экзаменов</button>

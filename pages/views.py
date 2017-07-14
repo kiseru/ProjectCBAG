@@ -1,8 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.urls import reverse
 
 
-@login_required(login_url='/auth/log_in')
+@login_required()
 def home(request):
     user = request.user
 
@@ -13,7 +14,7 @@ def home(request):
     }
 
     if context['group'] == 'Starostas':
-        return redirect('/academic_groups/students')
+        return redirect(reverse('groups:students'))
     elif context['group'] == 'Jury':
         pass
 
