@@ -44,7 +44,7 @@ class AcademicGroup(models.Model):
 
     #validator
     starosta_phone_number = models.CharField(max_length=12)
-    exams = models.ManyToManyField(Exam)
+    exams = models.ManyToManyField(Exam, blank=True)
     curator = models.CharField(max_length=50)
 
     def __str__(self):
