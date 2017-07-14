@@ -68,3 +68,23 @@ def add_student(request):
         return redirect('/academic_groups/students')
     else:
         return Http404()
+
+
+@login_required(login_url='/auth/log_in')
+def student(request, student_id):
+
+    if not request.user.groups.get().name == 'Starostas':
+        return HttpResponseForbidden()
+
+    if request.method == 'GET':
+
+        context = {
+            'student': models.Student.objects.get(pk=student_id),
+            'name': '{0} {1}'.format(request.user.first_name, request.user.last_name),
+        }
+
+        return render(request, 'academic_groups/student.html', context)
+    elif request.method == 'POST':
+        pass
+    else:
+        return Http404()

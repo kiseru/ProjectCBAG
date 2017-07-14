@@ -1,0 +1,68 @@
+/* Кнопка "Студенты" */
+
+@font-face {
+font-family: 'PT Sans';
+src: url('../fonts/PTSans-Regular.ttf') format('truetype');
+font-weight: normal;
+font-style: normal;
+}
+
+@font-face {
+font-family: 'Righteous';
+src: url('../fonts/Righteous-Regular.ttf') format('truetype');
+font-weight: normal;
+font-style: normal;
+}
+
+.container .main-main {
+  box-shadow: 0px 2px 10px -2px black;
+  background: white;
+  padding-top: 30px;
+}
+
+
+.container .main-main .main > p {
+	margin-left: 35px;
+	margin-top: 10px;
+	margin-right: 35px;
+	border-bottom-style: solid;
+	border-bottom-color: black;
+	border-bottom-width: 1px;
+}
+
+.container .main-main .inform > p {
+	margin-left: 35px;
+	margin-top: 1px;
+	margin-right: 35px;
+	margin-bottom: 1px;
+	
+}
+
+.container .main-main .secondarymenu .exams > p {
+	border-top-style: solid;
+	border-top-color: black;
+	border-top-width: 1.5px;
+	border-right-style: solid;
+	border-right-color: black;
+	border-right-width: 1.5px;
+	border-left-style: solid;
+	border-left-color: black;
+	border-left-width: 1px;
+	border-radius: 5px;
+	margin-top: 30px;
+	margin-right: 715px;
+	margin-left: 35px;
+	
+}
+.container .main-main .secondarymenu .meropriyatiya > p {
+	border-bottom-style: solid;
+	border-bottom-color: black;
+	border-bottom-width: 1px;
+	margin-left: 115px;
+	margin-top: -35px;
+}
+
+.container .main-main .redact .redactbutton > b {
+	color : #FFFFFF;
+	background: #FFFFFF
+}

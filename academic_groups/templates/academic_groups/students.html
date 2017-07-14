@@ -31,7 +31,7 @@
                 {% for student in academic_group.student_set.all %}
                     <tr>
                         <th>
-                            <a class="for-hover" href="#" data-toggle="tooltip" data-placement="bottom" title="Перейти к профилю">
+                            <a class="for-hover" href="{% url 'groups:student' student.id %}" data-toggle="tooltip" data-placement="bottom" title="Перейти к профилю">
                                 {{ student.name }}
                             </a>
                         </th>

@@ -1,0 +1,103 @@
+{% extends 'academic_groups/header.html' %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="main-main">
+            <div class="main">
+                <p><b>{{ student.name }}</b></p>
+            </div>
+
+            <div class="inform">
+                <p>Институт: {{ student.academic_group.institute }}</p>
+                <p>Группа: {{ student.academic_group.name }}</p>
+                <p>Курс: {{ student.academic_group.course }}</p>
+                <p>Куратор: {{ student.academic_group.curator }}</p>
+                <p>Староста: {{ student.academic_group.starosta.last_name }} {{ student.academic_group.starosta.first_name }}</p>
+            </div>
+
+            <div class="secondarymenu">
+                <div class="exams">
+                    <p>
+                        <b>
+                            <button type="button" class="examsbutton" style="border: none; background-color: white">
+                                Экзамены
+                            </button>
+                        </b>
+                    </p>
+                </div>
+
+                <div class="meropriyatiya">
+                    <p>
+                        <b>
+                            <button type="button" class="mbutton" style="border: none; background-color: white">
+                                Мероприятия
+                            </button>
+                        </b>
+                    </p>
+                </div>
+            </div>
+
+            <div class ="undermenu">
+                <table class="table table-bordered" style="width: 700px; margin-left: 35px">
+                    <thead>
+                        <tr>
+                            <th>Экзамен</th>
+                            <th>Баллы</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="table-exams">
+                        <tr>
+                            <td>Предмет 1:</td>
+                            <td>100</td>
+                        </tr>
+
+                        <tr>
+                            <td>Предмет 2:</td>
+                            <td>100</td>
+                        </tr>
+
+                        <tr>
+                            <td>Предмет 3:</td>
+                            <td>100</td>
+                        </tr>
+                        <tr>
+                            <td>Предмет 4:</td>
+                            <td>100</td>
+                        </tr>
+                        <tr>
+                            <td>Предмет 5:</td>
+                            <td>100</td>
+                        </tr>
+                    </tbody>
+
+                    <thead>
+                        <tr class="ending" style="height: 55px">
+                            <th>Средний балл:</th>
+                            <th>100</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+
+            <div class="redact" style="font-size: 2em">
+                <div class ="redactbutton" style="margin-left: 65px; margin-top: 25px">
+                    <p>
+                        <b>
+                            <button type="button" class="btn btn-large" style="borde: none; background-color: #0F9D58">
+                                Редактировать
+                            </button>
+                        </b>
+                    </p>
+                </div>
+
+                <p class="sometext">
+                    <br/>
+                    <br/>
+                </p>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
