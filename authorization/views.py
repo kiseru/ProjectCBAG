@@ -4,6 +4,9 @@ from django.shortcuts import render, redirect
 
 
 # Create your views here.
+from django.urls import reverse
+
+
 def log_in(request):
     if request.method == 'GET':
         return render(request, 'authorization/log_in.html')
@@ -13,11 +16,11 @@ def log_in(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-        return redirect('/')
+        return redirect(reverse('home'))
     else:
         return Http404()
 
 
 def log_out(request):
     logout(request)
-    return redirect('/')
+    return redirect(reverse('home'))

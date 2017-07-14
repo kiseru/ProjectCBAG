@@ -1,12 +1,14 @@
-from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden, Http404
 from django.shortcuts import render, redirect
+from django.urls import reverse
 
-from . import models
+from academic_groups.models import Exam, EducationalForm, ExamResult, Student
+
+from pages.decorators import should_be_starosta
 
 
 # Create your views here.
-@login_required(login_url='/auth/log_in')
+@should_be_starosta
 def students(request):
     user = request.user
     user_group = user.groups.get().name
@@ -15,6 +17,7 @@ def students(request):
 
     context = {
         'academic_group': academic_group,
+        'exams': Exam.objects.all(),
         'name': '{0} {1}'.format(user.first_name, user.last_name),
     }
 
@@ -24,7 +27,7 @@ def students(request):
         return HttpResponseForbidden()
 
 
-@login_required(login_url='/auth/log_in')
+@should_be_starosta
 def add_student(request):
     user = request.user
     academic_group = user.academicgroup
@@ -36,13 +39,13 @@ def add_student(request):
 
         context = {
             'academic_group': academic_group,
-            'educational_forms': models.EducationalForm.objects.all(),
+            'educational_forms': EducationalForm.objects.all(),
             'name': '{0} {1}'.format(user.first_name, user.last_name),
         }
 
         return render(request, 'academic_groups/add_student.html', context=context)
     elif request.method == 'POST':
-        student = models.Student()
+        student = Student()
 
         student.name = '{0} {1} {2}'.format(
             request.POST['last_name'],
@@ -52,19 +55,39 @@ def add_student(request):
 
         student.academic_group = academic_group
 
-        student.educational_form = models.EducationalForm.objects.get(pk=request.POST["educational_form"])
+        student.educational_form = EducationalForm.objects.get(pk=request.POST["educational_form"])
 
         student.save()
 
         exams = academic_group.exams.all()
 
         for exam in exams:
-            exam_score = models.ExamResult()
+            exam_score = ExamResult()
             exam_score.student = student
             exam_score.exam = exam
             exam_score.score = int(request.POST['{0}'.format(exam.id)])
             exam_score.save()
 
-        return redirect('/academic_groups/students')
+        return redirect(reverse("groups:students"))
     else:
         return Http404()
+
+
+@should_be_starosta
+def add_exam(request):
+    if not request.user.groups.get().name == 'Starostas':
+        return HttpResponseForbidden()
+
+    if request.method == 'POST':
+        exam = Exam.objects.get(pk=request.POST['exam_id'])
+
+        request.user.academicgroup.exams.add(exam)
+
+        for student in request.user.academicgroup.student_set.all():
+            exam_result = ExamResult()
+            exam_result.exam = exam
+            exam_result.student = student
+            exam_result.score = 0
+            exam_result.save()
+
+        return redirect(reverse('home'))
