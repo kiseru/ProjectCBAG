@@ -2,7 +2,7 @@ from django.http import HttpResponseForbidden, Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
-from academic_groups.models import Exam, EducationalForm, ExamResult, Student
+from academic_groups.models import Exam, ExamResult, Student
 
 from pages.decorators import should_be_starosta
 
@@ -39,7 +39,6 @@ def add_student(request):
 
         context = {
             'academic_group': academic_group,
-            'educational_forms': EducationalForm.objects.all(),
             'name': '{0} {1}'.format(user.first_name, user.last_name),
         }
 
@@ -55,7 +54,7 @@ def add_student(request):
 
         student.academic_group = academic_group
 
-        student.educational_form = EducationalForm.objects.get(pk=request.POST["educational_form"])
+        student.educational_form = request.POST['educational_form']
 
         student.save()
 

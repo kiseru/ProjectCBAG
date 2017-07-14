@@ -73,8 +73,6 @@ class CuratorAdmin(admin.ModelAdmin):
 
 admin.site.register(models.AcademicGroup, AcademicGroupAdmin)
 admin.site.register(models.Student, StudentAdmin)
-admin.site.register(models.Curator)
-admin.site.register(models.EducationalForm)
 admin.site.register(models.Exam)
 admin.site.register(models.Event)
 admin.site.register(models.EventGroup)
