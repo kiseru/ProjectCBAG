@@ -9,16 +9,6 @@ class Curator(models.Model):
         return self.name
 
 
-class EducationalForm(models.Model):
-    """
-    List of educational forms
-    """
-    name = models.CharField(max_length=8)
-
-    def __str__(self):
-        return self.name
-
-
 class Exam(models.Model):
     """
     List of exam
@@ -70,7 +60,7 @@ class AcademicGroup(models.Model):
 
 class Student(models.Model):
     name = models.CharField(max_length=50)
-    educational_form = models.ForeignKey(EducationalForm, on_delete=models.CASCADE)
+    educational_form = models.CharField(max_length=8)
     academic_group = models.ForeignKey(AcademicGroup, on_delete=models.CASCADE)
     student_exam = models.ManyToManyField(Exam, through='ExamResult', through_fields=('student', 'exam'))
     average_score = models.PositiveSmallIntegerField(default=0)
