@@ -53,9 +53,7 @@ def add_student(request):
         )
 
         student.academic_group = academic_group
-
         student.educational_form = request.POST['educational_form']
-
         student.save()
 
         exams = academic_group.exams.all()
