@@ -125,3 +125,10 @@ def edit_student_exams(request, student_id):
         }))
     else:
         return Http404()
+
+
+@should_be_starosta()
+def delete_student(request, student_id):
+    student = Student.objects.get(pk=student_id)
+    student.delete()
+    return redirect(reverse('groups:students'))
