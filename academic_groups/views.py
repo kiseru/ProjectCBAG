@@ -90,3 +90,38 @@ def add_exam(request):
             exam_result.save()
 
         return redirect(reverse('home'))
+
+
+@should_be_starosta
+def student_show(request, student_id):
+    if request.method == 'GET':
+
+        student = Student.objects.get(pk=student_id)
+
+        context = {
+            'student': student,
+            'student_exams': student.examresult_set.filter(student=student),
+            'name': '{0} {1}'.format(request.user.first_name, request.user.last_name),
+        }
+
+        return render(request, 'academic_groups/student.html', context)
+    else:
+        return Http404()
+
+
+@should_be_starosta()
+def edit_student_exams(request, student_id):
+    if request.POST:
+        student = Student.objects.get(pk=student_id)
+
+        student_exams = list(filter(lambda exam_result: exam_result.student == student, student.examresult_set.all()))
+
+        for student_exam in student_exams:
+            student_exam.score = request.POST['exam{0}'.format(student_exam.exam_id)]
+            student_exam.save()
+
+        return redirect(reverse("groups:student", args={
+            student_id: student.id,
+        }))
+    else:
+        return Http404()

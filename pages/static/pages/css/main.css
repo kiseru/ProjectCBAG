@@ -24,7 +24,7 @@ body {
 
 .navbar-brand {
   margin-left: 100px;
-  font-family: "Righteous";
+    font-family: "Righteous", serif;
   font-size: 40px;
   color: white;
 }
@@ -40,7 +40,7 @@ body {
 
 .shadow {
   padding-bottom: 20px;
-  box-shadow: 0 0 7px 0.5px;
+  box-shadow: 0 0 7px 1px;
 }
 /* Students */
 .for-hover {
