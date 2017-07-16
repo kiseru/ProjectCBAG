@@ -1,0 +1,95 @@
+{% extends 'academic_groups/header.html' %}
+
+{% block content %}
+<div class="container shadow " style="padding-top: 50px">
+  <div class="panel-group" id="collapse-group">
+
+    {% for event_group in academic_group.eventgroup_set.all %}
+
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <a href="#el1" data-toggle="collapse" data-parent="#collapse-group">
+            Название группы: {{ event_group }}<br>
+            Место: {{ event_group.prize_winning_place }}
+          </a>
+        </div>
+
+        <div class="collapse in container" id="el{{ event_group.id }}">
+          <div class="panel-body">
+            <ul>
+              <li>Мероприятие: {{ event_group.event_name }}</li>
+              <li>Область: {{ event_group.event_area }}</li>
+              <li>Уровень: {{ event_group.event_level }}</li>
+            </ul>
+
+            <ol>
+              {% for student in event_group.student_event.all %}
+                <li>{{ student.name }}</li>
+              {% endfor %}
+            </ol>
+          </div>
+        </div>
+      </div>
+
+    {% endfor %}
+
+
+    <div style="text-align: center; margin-top: 20px">
+      <button class="btn btn-info" data-toggle="modal" data-target="#myModal">Добавить мероприятие</button>
+      <div id="myModal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-md">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button class="close" data-dismiss="modal">х</button>
+              <h3 class="modal-title">Добавить мероприятие</h3>
+            </div>
+            <div class="modal-body">
+              <form action="" method="post">
+
+                {% csrf_token %}
+
+                <label for="group-name">Название группы:</label><br>
+                <input type="text" id="group-name" size="20" name="group-name"><br>
+
+                <label for="name">Мероприятие:</label><br>
+                <input type="text" id="name" size="20" name="name"><br>
+
+                <label for="theme">Область:</label><br>
+                <select id="theme" name="theme-select">
+                  <option selected value="">Выберите</option>
+                  <option value="1">Научная деятельность</option>
+                  <option value="2">Культурная деятельность</option>
+                </select>
+
+                <br>
+                <label for="theme">Уровень:</label><br>
+                <select id="theme" name="event-level">
+                  <option selected value="">Выберите</option>
+                  <option value="1">Всемирный</option>
+                  <option value="2">Городской</option>
+                </select>
+
+                <br>
+
+                <label for="place">Занятое место:</label><br>
+                <select id="place" name="place" >
+                  <option selected value="">Выберите занятое место</option>
+                  <option value="1">1 место</option>
+                  <option value="2">2 место</option>
+                  <option value="3">3 место</option>
+                  <option value="4">Участие</option>
+                </select>
+
+              </form>
+            </div>
+            <div class="modal-footer">
+
+              <a href="#"><button name="safe-event" class="btn btn-success">Сохранить</button></a>
+              <a href="#"><button class="btn btn-danger" data-dismiss="modal">Закрыть</button></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock %}

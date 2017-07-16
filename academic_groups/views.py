@@ -2,7 +2,7 @@ from django.http import HttpResponseForbidden, Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
-from academic_groups.models import Exam, ExamResult, Student, AcademicGroup
+from academic_groups.models import Exam, ExamResult, Student, AcademicGroup, EventGroup
 
 from pages.decorators import should_be_starosta
 
@@ -27,7 +27,7 @@ def add_student(request):
     user = request.user
     academic_group = user.academicgroup
 
-    if request.GET:
+    if request.method == 'GET':
 
         context = {
             'academic_group': academic_group,
@@ -134,3 +134,14 @@ def delete_exam(request):
         return redirect(reverse('groups:students'))
 
     return Http404()
+
+
+@should_be_starosta
+def events(request):
+
+    context = {
+        'academic_group': request.user.academicgroup,
+        'name': '{0} {1}'.format(request.user.first_name, request.user.last_name),
+    }
+
+    return render(request, 'academic_groups/events.html', context)

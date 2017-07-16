@@ -13,11 +13,6 @@ class ExamInline(admin.TabularInline):
     extra = 0
 
 
-class EventInline(admin.TabularInline):
-    model = models.Event
-    extra = 0
-
-
 class ExamResultInline(admin.TabularInline):
     model = models.ExamResult
     extra = 0
@@ -74,8 +69,4 @@ class CuratorAdmin(admin.ModelAdmin):
 admin.site.register(models.AcademicGroup, AcademicGroupAdmin)
 admin.site.register(models.Student, StudentAdmin)
 admin.site.register(models.Exam)
-admin.site.register(models.Event)
 admin.site.register(models.EventGroup)
-admin.site.register(models.EventArea)
-admin.site.register(models.EventLevel)
-admin.site.register(models.PrizeWinningPlace)

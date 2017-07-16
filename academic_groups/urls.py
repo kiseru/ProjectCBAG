@@ -12,4 +12,5 @@ urlpatterns = [
     url(r'^student/(?P<student_id>[0-9]+)/edit_student_exams/$', views.edit_student_exams, name='edit_student_exams'),
     url(r'^student/(?P<student_id>[0-9]+)/delete_student/$', views.delete_student, name='delete_student'),
     url(r'^students/delete_exam/', views.delete_exam, name='delete_exam'),
+    url(r'^events/$', views.events, name='events'),
 ]
