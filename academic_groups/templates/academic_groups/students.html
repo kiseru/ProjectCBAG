@@ -1,97 +1,139 @@
 {% extends 'academic_groups/header.html' %}
 
 {% block content %}
+  <div class="container shadow">
+    <h2>Результаты экзаменов</h2>
+    <p>Группа: {{ academic_group.name }}</p>
+    <table class="table table-bordered table-hover table-striped">
 
-    <div class="container shadow">
-        <h2>Результаты экзаменов</h2>
-        <p>Группа: {{ academic_group.name }}</p>
-        <table class="table table-bordered table-hover table-striped">
-            <thead>
-                <tr class="active">
-                    <th></th>
-                    <th colspan="{{ academic_group.exams.count }}" >Экзамены</th>
-                </tr>
-            </thead>
+      <thead>
+      <tr class="active">
+        <th></th>
+        <th colspan="{{ academic_group.exams.count }}" >Экзамены</th>
+      </tr>
+      </thead>
 
-            <tbody>
-                <tr>
-                    <th>ФИО</th>
+      <tbody>
+      <tr>
+        <th>ФИО</th>
 
-                    {% for exam in academic_group.exams.all %}
+        {% for exam in academic_group.exams.all %}
+          <th>{{ exam.name }}</th>
+        {% endfor %}
 
-                        <td>
-                            {{ exam.name }}
-                        </td>
+        <th>Ср.балл</th>
+      </tr>
 
-                    {% endfor %}
-
-                    <th>Ср.балл</th>
-                </tr>
-
-                {% for student in academic_group.student_set.all %}
-                    <tr>
-                        <th>
-                            <a class="for-hover" href="{% url 'groups:student' student.id %}" data-toggle="tooltip" data-placement="bottom" title="Перейти к профилю">
-                                {{ student.name }}
-                            </a>
-                        </th>
-
-                        {% for examresult in student.examresult_set.all %}
-                            <td>{{ examresult.score }}</td>
-                        {% endfor %}
-
-                        <td>0</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-
-        <div style="text-align: right">
-            <a href="{% url 'groups:add_student' %}">
-                <button type="button" name="button" class="btn btn-success">Добавить студента</button>
+      {% for student in academic_group.student_set.all %}
+        <tr>
+          <th>
+            <a class="for-hover" href="{% url 'groups:student' student.id %}" data-toggle="tooltip" data-placement="bottom" title="Перейти к профилю">
+              {{ student.name }}
             </a>
+          </th>
 
-            <button class="btn btn-success" data-toggle="modal" data-target="#myModal">Добавить экзамен</button>
+          {% for examresult in student.examresult_set.all %}
+            <td>{{ examresult.score }}</td>
+          {% endfor %}
 
-            <div id="myModal" class="modal fade" tabindex="-1" style="margin: auto; text-align: center">
-                    <div class="modal-dialog modal-sm">
-                        <div class="modal-content">
-                            <form action="{% url 'groups:add_exam' %}" method="post">
+          <td>0</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
 
-                                {% csrf_token %}
+    <div style="text-align: right">
+      <a href="{% url 'groups:add_student' %}">
+        <button type="button" name="button" class="btn btn-success">Добавить студента</button>
+      </a>
 
-                                <div class="modal-header">
-                                    <button class="close" data-dismiss="modal">х</button>
-                                    <h4 class="modal-title">Добавить экзамен</h4>
-                                </div>
+      <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Экзамен <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li>
+            <a data-toggle="modal" data-target="#addExamModal">Добавить экзамен</a>
+          </li>
 
-                                <div class="modal-body">
-                                    <label for="name">Название</label><br/>
-                                    <select name="exam_id" id="name" style="width: 100%;">
-                                        <option selected>Выберите экзамен</option>
+          <li>
+            <a data-toggle="modal" data-target="#deleteExamModal">Удалить экзамен</a>
+          </li>
+        </ul>
+      </div>
 
-                                        {% for exam in exams %}
+      <div id="addExamModal" class="modal fade" tabindex="-1" style="margin: auto; text-align: center">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <form action="{% url 'groups:add_exam' %}" method="post">
 
-                                            {% if not academic_group in exam.academicgroup_set.all %}
-                                                <option value="{{ exam.id }}">{{ exam.name }}</option>
-                                            {% endif %}
+              {% csrf_token %}
 
-                                        {% endfor %}
+              <div class="modal-header">
+                <button class="close" data-dismiss="modal">х</button>
+                <h4 class="modal-title">Добавить экзамен</h4>
+              </div>
 
-                                    </select>
-                                </div>
+              <div class="modal-body">
+                <label for="name">Название</label><br/>
+                <select name="exam_id" id="name" style="width: 100%;">
+                  <option selected>Выберите экзамен</option>
 
-                                <div class="modal-footer">
-                                    <input type="submit" class="btn btn-success" value="Добавить">
-                                    <button class="btn btn-danger" data-dismiss="modal">Закрыть</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+                  {% for exam in exams %}
 
-            <a href="#" name="button" class="btn btn-success">Обновить результаты экзаменов</a>
+                    {% if not academic_group in exam.academicgroup_set.all %}
+                      <option value="{{ exam.id }}">{{ exam.name }}</option>
+                    {% endif %}
+
+                  {% endfor %}
+
+                </select>
+              </div>
+
+              <div class="modal-footer">
+                <input type="submit" class="btn btn-success" value="Добавить">
+                <button class="btn btn-danger" data-dismiss="modal">Закрыть</button>
+              </div>
+            </form>
+          </div>
         </div>
+      </div>
 
+      <div id="deleteExamModal" class="modal fade" tabindex="-1" style="margin: auto; text-align: center">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <form action="{% url 'groups:delete_exam' %}" method="post">
+
+              {% csrf_token %}
+
+              <div class="modal-header">
+                <button class="close" data-dismiss="modal">х</button>
+                <h4 class="modal-title">Удалить экзамен</h4>
+              </div>
+
+              <div class="modal-body">
+                <label for="name">Название</label><br/>
+                <select name="exam_id" id="name" style="width: 100%;">
+                  <option selected>Выберите экзамен</option>
+
+                  {% for exam in academic_group.exams.all %}
+                    <option value="{{ exam.id }}">{{ exam }}</option>
+                  {% endfor %}
+
+                </select>
+              </div>
+
+              <div class="modal-footer">
+                <input type="submit" class="btn btn-success" value="Добавить">
+                <button class="btn btn-danger" data-dismiss="modal">Закрыть</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <a href="#" name="button" class="btn btn-success">Обновить результаты экзаменов</a>
     </div>
+
+  </div>
 {% endblock %}

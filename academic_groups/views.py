@@ -2,7 +2,7 @@ from django.http import HttpResponseForbidden, Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
-from academic_groups.models import Exam, ExamResult, Student
+from academic_groups.models import Exam, ExamResult, Student, AcademicGroup
 
 from pages.decorators import should_be_starosta
 
@@ -11,8 +11,6 @@ from pages.decorators import should_be_starosta
 @should_be_starosta
 def students(request):
     user = request.user
-    user_group = user.groups.get().name
-
     academic_group = user.academicgroup
 
     context = {
@@ -21,19 +19,13 @@ def students(request):
         'name': '{0} {1}'.format(user.first_name, user.last_name),
     }
 
-    if user_group == 'Starostas':
-        return render(request, 'academic_groups/students.html', context=context)
-    else:
-        return HttpResponseForbidden()
+    return render(request, 'academic_groups/students.html', context=context)
 
 
 @should_be_starosta
 def add_student(request):
     user = request.user
     academic_group = user.academicgroup
-
-    if not user.groups.get().name == 'Starostas':
-        return HttpResponseForbidden()
 
     if request.method == 'GET':
 
@@ -71,26 +63,6 @@ def add_student(request):
 
 
 @should_be_starosta
-def add_exam(request):
-    if not request.user.groups.get().name == 'Starostas':
-        return HttpResponseForbidden()
-
-    if request.method == 'POST':
-        exam = Exam.objects.get(pk=request.POST['exam_id'])
-
-        request.user.academicgroup.exams.add(exam)
-
-        for student in request.user.academicgroup.student_set.all():
-            exam_result = ExamResult()
-            exam_result.exam = exam
-            exam_result.student = student
-            exam_result.score = 0
-            exam_result.save()
-
-        return redirect(reverse('home'))
-
-
-@should_be_starosta
 def student_show(request, student_id):
     if request.method == 'GET':
 
@@ -107,7 +79,7 @@ def student_show(request, student_id):
         return Http404()
 
 
-@should_be_starosta()
+@should_be_starosta
 def edit_student_exams(request, student_id):
     if request.POST:
         student = Student.objects.get(pk=student_id)
@@ -125,8 +97,41 @@ def edit_student_exams(request, student_id):
         return Http404()
 
 
-@should_be_starosta()
+@should_be_starosta
 def delete_student(request, student_id):
     student = Student.objects.get(pk=student_id)
     student.delete()
     return redirect(reverse('groups:students'))
+
+
+@should_be_starosta
+def add_exam(request):
+    if request.POST:
+        exam = Exam.objects.get(pk=request.POST['exam_id'])
+
+        request.user.academicgroup.exams.add(exam)
+
+        for student in request.user.academicgroup.student_set.all():
+            exam_result = ExamResult()
+            exam_result.exam = exam
+            exam_result.student = student
+            exam_result.score = 0
+            exam_result.save()
+
+        return redirect(reverse('home'))
+
+
+@should_be_starosta
+def delete_exam(request):
+    if request.POST:
+        academic_group = request.user.academicgroup
+        academic_group.exams.remove(request.POST['exam_id'])
+        academic_group.save()
+
+        for student in academic_group.student_set.all():
+            student_exam = ExamResult.objects.filter(student_id=student.id, exam_id=request.POST['exam_id'])
+            student_exam.delete()
+
+        return redirect(reverse('groups:students'))
+
+    return Http404()
