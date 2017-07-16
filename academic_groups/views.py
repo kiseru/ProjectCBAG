@@ -27,7 +27,7 @@ def add_student(request):
     user = request.user
     academic_group = user.academicgroup
 
-    if request.method == 'GET':
+    if request.GET:
 
         context = {
             'academic_group': academic_group,
@@ -35,7 +35,7 @@ def add_student(request):
         }
 
         return render(request, 'academic_groups/add_student.html', context=context)
-    elif request.method == 'POST':
+    elif request.POST:
         student = Student()
 
         student.name = '{0} {1} {2}'.format(
@@ -64,19 +64,15 @@ def add_student(request):
 
 @should_be_starosta
 def student_show(request, student_id):
-    if request.method == 'GET':
+    student = Student.objects.get(pk=student_id)
 
-        student = Student.objects.get(pk=student_id)
+    context = {
+        'student': student,
+        'student_exams': student.examresult_set.filter(student=student),
+        'name': '{0} {1}'.format(request.user.first_name, request.user.last_name),
+    }
 
-        context = {
-            'student': student,
-            'student_exams': student.examresult_set.filter(student=student),
-            'name': '{0} {1}'.format(request.user.first_name, request.user.last_name),
-        }
-
-        return render(request, 'academic_groups/student.html', context)
-    else:
-        return Http404()
+    return render(request, 'academic_groups/student.html', context)
 
 
 @should_be_starosta
@@ -99,9 +95,12 @@ def edit_student_exams(request, student_id):
 
 @should_be_starosta
 def delete_student(request, student_id):
-    student = Student.objects.get(pk=student_id)
-    student.delete()
-    return redirect(reverse('groups:students'))
+    if request.POST:
+        student = Student.objects.get(pk=student_id)
+        student.delete()
+        return redirect(reverse('groups:students'))
+
+    return Http404()
 
 
 @should_be_starosta
