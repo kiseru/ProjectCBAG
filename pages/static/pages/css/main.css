@@ -74,7 +74,7 @@ body {
 
 .events-tabs {
   float: right;
-  display: inline-block;
+  display: inline;
   margin-right: 30px;
   margin-bottom: 5px;
 }

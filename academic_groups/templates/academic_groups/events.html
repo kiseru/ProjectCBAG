@@ -9,7 +9,7 @@
       <div class="panel panel-info">
         <a href="#el{{ event_group.id }}" data-toggle="collapse" data-parent="#collapse-group">
           <div class="panel-heading">
-            <p>Название группы: {{ event_group }}</p><br>
+            <h3><b>Название группы:</b> {{ event_group }}</h3><br>
           </div>
         </a>
 
@@ -26,11 +26,9 @@
             <ol>
               {% for student in event_group.student_event.all %}
                 <li>{{ student.name }}</li>
+
               {% endfor %}
             </ol>
-          </div>
-
-          <div class="events-tabs">
             <button class="btn btn-default" data-toggle="modal" data-target="#add-student{{ event_group.id }}"><i class="fa fa-plus"></i> Добавить студента</button>
             <div id="add-student{{ event_group.id }}" class="modal fade" tabindex="-1">
                 <div class="modal-dialog modal-sm">
@@ -65,73 +63,78 @@
                   </form>
                 </div>
               </div>
+          </div>
 
-            <button class=" btn btn-default" data-toggle="modal" data-target="#edit-event-group{{ event_group.id }}"><i class="glyphicon glyphicon-pencil" aria-hidden="true"></i> Редактировать</button>
-            <div id="edit-event-group{{ event_group.id }}" class="modal fade" tabindex="-1">
-              <div class="modal-dialog modal-sm">
-                <form class="modal-content" action="{% url 'groups:edit_event_group' %}" method="post">
-                  <div class="modal-header">
-                    <button class="close" data-dismiss="modal">х</button>
-                    <h3 class="modal-title">Редактировать мероприятие</h3>
-                  </div>
+          <div class="events-tabs">
+            <div>
+              <button class=" btn btn-default" data-toggle="modal" data-target="#edit-event-group{{ event_group.id }}"><i class="glyphicon glyphicon-pencil" aria-hidden="true"></i> Редактировать</button>
+              <div id="edit-event-group{{ event_group.id }}" class="modal fade" tabindex="-1">
+                <div class="modal-dialog modal-sm">
+                  <form class="modal-content" action="{% url 'groups:edit_event_group' %}" method="post">
+                    <div class="modal-header">
+                      <button class="close" data-dismiss="modal">х</button>
+                      <h3 class="modal-title">Редактировать мероприятие</h3>
+                    </div>
 
-                  <div class="modal-body">
-                    {% csrf_token %}
+                    <div class="modal-body">
+                      {% csrf_token %}
 
-                    <input type="hidden" name="event_id" value="{{ event_group.id }}">
+                      <input type="hidden" name="event_id" value="{{ event_group.id }}">
 
-                    <label for="group_name">Название группы:</label><br>
-                    <input type="text" id="group_name" size="20" name="group_name" value="{{ event_group.name }}"><br>
+                      <label for="group_name">Название группы:</label><br>
+                      <input type="text" id="group_name" size="20" name="group_name" value="{{ event_group.name }}"><br>
 
-                    <label for="event_name">Мероприятие:</label><br>
-                    <input type="text" id="event_name" size="20" name="event_name" value="{{ event_group.event_name }}"><br>
+                      <label for="event_name">Мероприятие:</label><br>
+                      <input type="text" id="event_name" size="20" name="event_name" value="{{ event_group.event_name }}"><br>
 
-                    <label for="event_area">Область:</label><br>
-                    <select id="event_area" name="event_area">
-                      <option selected value="{{ event_group.event_area }}">{{ event_group.event_area.forward_name }}</option>
-                      <option value="n">Научная</option>
-                      <option value="k">Культурно-массовая</option>
-                      <option value="s">Спортивная</option>
-                      <option value="o">Общественная</option>
-                    </select>
+                      <label for="event_area">Область:</label><br>
+                      <select id="event_area" name="event_area">
+                        <option selected value="{{ event_group.event_area }}">{{ event_group.event_area.forward_name }}</option>
+                        <option value="n">Научная</option>
+                        <option value="k">Культурно-массовая</option>
+                        <option value="s">Спортивная</option>
+                        <option value="o">Общественная</option>
+                      </select>
 
-                    <br>
-                    <label for="event_level">Уровень:</label><br>
-                    <select id="event_level" name="event_level">
-                      <option selected value="{{ event_group.event_level }}">{{ event_group.event_level }}</option>
-                      <option value="m">Международный</option>
-                      <option value="v">Всероссийский</option>
-                      <option value="r">Региональный</option>
-                      <option value="g">Городской</option>
-                      <option value="u">Университетский</option>
-                    </select>
+                      <br>
+                      <label for="event_level">Уровень:</label><br>
+                      <select id="event_level" name="event_level">
+                        <option selected value="{{ event_group.event_level }}">{{ event_group.event_level }}</option>
+                        <option value="m">Международный</option>
+                        <option value="v">Всероссийский</option>
+                        <option value="r">Региональный</option>
+                        <option value="g">Городской</option>
+                        <option value="u">Университетский</option>
+                      </select>
 
-                    <br>
+                      <br>
 
-                    <label for="place">Занятое место:</label><br>
-                    <select id="place" name="place" >
-                      <option selected value="{{ event_group.prize_winning_place }}">{{ event_group.prize_winning_place }}</option>
-                      <option value="1">1 место</option>
-                      <option value="2">2 место</option>
-                      <option value="3">3 место</option>
-                      <option value="0">участие</option>
-                    </select>
-                  </div>
+                      <label for="place">Занятое место:</label><br>
+                      <select id="place" name="place" >
+                        <option selected value="{{ event_group.prize_winning_place }}">{{ event_group.prize_winning_place }}</option>
+                        <option value="1">1 место</option>
+                        <option value="2">2 место</option>
+                        <option value="3">3 место</option>
+                        <option value="0">участие</option>
+                      </select>
+                    </div>
 
-                  <div class="modal-footer">
-                    <input type="submit" value="Добавить">
-                    <a href="#"><button class="btn btn-danger" data-dismiss="modal">Закрыть</button></a>
-                  </div>
-                </form>
+                    <div class="modal-footer">
+                      <input type="submit" value="Добавить">
+                      <a href="#"><button class="btn btn-danger" data-dismiss="modal">Закрыть</button></a>
+                    </div>
+                  </form>
+                </div>
               </div>
-            </div>
-
+          </div>
+          <div>
             <form action="{% url 'groups:delete_event_group' %}" method="post">
               {% csrf_token %}
 
               <input type="hidden" name="event_group_id" value="{{ event_group.id }}">
               <input type="submit" class="btn btn-danger" value="Удалить">
             </form>
+            </div>
           </div>
         </div>
       </div>
@@ -191,8 +194,8 @@
             </div>
 
             <div class="modal-footer">
-              <input type="submit" value="Добавить">
-              <a href="#"><button class="btn btn-danger" data-dismiss="modal">Закрыть</button></a>
+              <a href="#"><button class="btn btn-default btn-md" type="button" name="add-event">Добавить</button></a>
+              <a href="#"><button class="btn btn-danger btn-md" data-dismiss="modal">Закрыть</button></a>
             </div>
           </form>
         </div>
