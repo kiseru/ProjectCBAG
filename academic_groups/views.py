@@ -4,7 +4,7 @@ from django.urls import reverse
 
 from academic_groups.models import Exam, ExamResult, Student, AcademicGroup, EventGroup
 
-from pages.decorators import should_be_starosta
+from pages.decorators import should_be_starosta, should_be_jury
 
 
 # Create your views here.
@@ -193,3 +193,11 @@ def delete_event_group(request):
         event_group.delete()
 
         return redirect(reverse('groups:events'))
+
+
+@should_be_jury
+def jury(request):
+
+    context = {}
+
+    return render(request, 'academic_groups/jury.html', context)

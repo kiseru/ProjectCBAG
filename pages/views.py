@@ -16,6 +16,6 @@ def home(request):
     if context['group'] == 'Starostas':
         return redirect(reverse('groups:students'))
     elif context['group'] == 'Jury':
-        pass
+        return redirect(reverse('groups:jury'))
 
     return render(request, 'pages/home.html', context)
