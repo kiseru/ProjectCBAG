@@ -1,5 +1,14 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth.models import User
+
+
+def validate_telephone_number(telephone_number):
+    if telephone_number[0] != '+':
+        return ValidationError(
+            '%(telephone_number) is not a telephone number',
+            params={'telephone_number': telephone_number},
+        )
 
 
 class Exam(models.Model):
@@ -17,7 +26,7 @@ class AcademicGroup(models.Model):
     course = models.PositiveSmallIntegerField(default=1)
     name = models.CharField(max_length=6)
     starosta = models.OneToOneField(User)
-    starosta_phone_number = models.CharField(max_length=12)
+    starosta_phone_number = models.CharField(max_length=12, validators=[validate_telephone_number])
     exams = models.ManyToManyField(Exam, blank=True)
     curator = models.CharField(max_length=50)
 
@@ -27,7 +36,10 @@ class AcademicGroup(models.Model):
 
 class Student(models.Model):
     name = models.CharField(max_length=50)
-    educational_form = models.CharField(max_length=8)
+    educational_form = models.CharField(max_length=1, choices=[
+        ('b', 'Бюджет'),
+        ('k', 'Контракт'),
+    ])
     academic_group = models.ForeignKey(AcademicGroup, on_delete=models.CASCADE)
     student_exam = models.ManyToManyField(Exam, through='ExamResult', through_fields=('student', 'exam'))
     average_score = models.PositiveSmallIntegerField(default=0)
@@ -62,13 +74,13 @@ class EventGroup(models.Model):
         ('s', 'Спортивная'),
         ('o', 'Общественная')
     ])
-    event_level = models.CharField(max_length=2, choices=[
+    event_level = models.CharField(max_length=1, choices=[
         ('m', 'Международный'),
         ('v', 'Всероссийский'),
         ('r', 'Региональный'),
         ('g', 'Городской'),
         ('u', 'Университетский'),
-        ])
+    ])
 
     academic_group = models.ForeignKey(AcademicGroup, on_delete=models.CASCADE)
 

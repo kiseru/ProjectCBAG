@@ -145,3 +145,51 @@ def events(request):
     }
 
     return render(request, 'academic_groups/events.html', context)
+
+
+@should_be_starosta
+def add_event(request):
+    if request.POST:
+        event_group = EventGroup()
+        event_group.name = request.POST['group_name']
+        event_group.event_name = request.POST['event_name']
+        event_group.event_area = request.POST['event_area']
+        event_group.event_level = request.POST['event_level']
+        event_group.prize_winning_place = request.POST['place']
+        event_group.academic_group = request.user.academicgroup
+        event_group.save()
+        return redirect(reverse('groups:events'))
+
+
+@should_be_starosta
+def event_add_student(request):
+    if request.POST:
+
+        event_group = EventGroup.objects.get(pk=request.POST['event_group_id'])
+        student = Student.objects.get(pk=request.POST['student'])
+        event_group.student_event.add(student)
+        event_group.save()
+
+        return redirect(reverse('groups:events'))
+
+
+@should_be_starosta
+def edit_event_group(request):
+    if request.POST:
+        event_group = EventGroup.objects.get(pk=request.POST['event_id'])
+        event_group.name = request.POST['group_name']
+        event_group.event_name = request.POST['event_name']
+        event_group.event_level = request.POST['event_level']
+        event_group.prize_winning_place = request.POST['place']
+        event_group.save()
+
+        return redirect(reverse('groups:events'))
+
+
+@should_be_starosta
+def delete_event_group(request):
+    if request.POST:
+        event_group = EventGroup.objects.get(pk=request.POST['event_group_id'])
+        event_group.delete()
+
+        return redirect(reverse('groups:events'))
