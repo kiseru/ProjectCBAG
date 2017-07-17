@@ -38,6 +38,17 @@ body {
   color: #FBFBFF;
 }
 
+.navbar-toggle {
+  background-color:#F8F8F8;
+}
+.navbar-header .navbar-toggle .icon-bar{
+   background-color: #888888;
+ }
+
+ .icon-bar{
+    background-color: #888888;
+  }
+
 .shadow {
   padding-bottom: 20px;
   box-shadow: 0 0 7px 1px;
