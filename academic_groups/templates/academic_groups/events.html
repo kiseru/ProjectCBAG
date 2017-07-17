@@ -7,21 +7,22 @@
     {% for event_group in academic_group.eventgroup_set.all %}
 
       <div class="panel panel-info">
-        <div class="panel-heading">
-          <a href="#el{{ event_group.id }}" data-toggle="collapse" data-parent="#collapse-group">
-            Название группы: {{ event_group }}<br>
-            Место: {{ event_group.prize_winning_place }}
-          </a>
-        </div>
+        <a href="#el{{ event_group.id }}" data-toggle="collapse" data-parent="#collapse-group">
+          <div class="panel-heading">
+            <p>Название группы: {{ event_group }}</p><br>
+          </div>
+        </a>
 
         <div class="collapse container" id="el{{ event_group.id }}">
           <div class="panel-body">
             <ul>
-              <li>Мероприятие: {{ event_group.event_name }}</li>
-              <li>Область: {{ event_group.event_area }}</li>
-              <li>Уровень: {{ event_group.event_level }}</li>
+              <li><b>Место:</b>  {{ event_group.prize_winning_place }}</li>
+              <li><b>Мероприятие:</b>  {{ event_group.event_name }}</li>
+              <li><b>Область:</b>  {{ event_group.event_area }}</li>
+              <li><b>Уровень:</b>  {{ event_group.event_level }}</li>
             </ul>
 
+            <h4 style="margin-top: 30px; margin-bottom: 15px">Студенты-участники</h4>
             <ol>
               {% for student in event_group.student_event.all %}
                 <li>{{ student.name }}</li>
@@ -30,7 +31,7 @@
           </div>
 
           <div class="events-tabs">
-            <button class="btn btn-success" data-toggle="modal" data-target="#add-student{{ event_group.id }}"><i class="fa fa-plus"></i> Добавить студента</button>
+            <button class="btn btn-default" data-toggle="modal" data-target="#add-student{{ event_group.id }}"><i class="fa fa-plus"></i> Добавить студента</button>
             <div id="add-student{{ event_group.id }}" class="modal fade" tabindex="-1">
                 <div class="modal-dialog modal-sm">
                   <form class="modal-content" action="{% url 'groups:event_add_student' %}" method="post">
@@ -65,7 +66,7 @@
                 </div>
               </div>
 
-            <button class=" btn btn-warning" data-toggle="modal" data-target="#edit-event-group{{ event_group.id }}"><i class="glyphicon glyphicon-pencil" aria-hidden="true"></i> Редактировать</button>
+            <button class=" btn btn-default" data-toggle="modal" data-target="#edit-event-group{{ event_group.id }}"><i class="glyphicon glyphicon-pencil" aria-hidden="true"></i> Редактировать</button>
             <div id="edit-event-group{{ event_group.id }}" class="modal fade" tabindex="-1">
               <div class="modal-dialog modal-sm">
                 <form class="modal-content" action="{% url 'groups:edit_event_group' %}" method="post">
@@ -87,7 +88,7 @@
 
                     <label for="event_area">Область:</label><br>
                     <select id="event_area" name="event_area">
-                      <option selected value="{{ event_group.event_area }}">{{ event_group.event_area }}</option>
+                      <option selected value="{{ event_group.event_area }}">{{ event_group.event_area.forward_name }}</option>
                       <option value="n">Научная</option>
                       <option value="k">Культурно-массовая</option>
                       <option value="s">Спортивная</option>
@@ -139,7 +140,7 @@
 
 
     <div style="text-align: center; margin-top: 20px">
-      <button class="btn btn-info" data-toggle="modal" data-target="#myModal">Добавить мероприятие</button>
+      <button class="btn btn-default" data-toggle="modal" data-target="#myModal">Добавить мероприятие</button>
       <div id="myModal" class="modal fade" tabindex="-1">
         <div class="modal-dialog modal-md">
           <form class="modal-content" action="{% url 'groups:add_event' %}" method="post">
