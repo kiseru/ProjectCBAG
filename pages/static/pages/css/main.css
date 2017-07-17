@@ -244,3 +244,17 @@ th {
 .table > thead > tr.active > th {
     background-color: #376F86;
 }
+
+.event-block {
+  width: 100%;
+}
+
+.event-block > ul > li {
+  font-size: 20px;
+}
+
+.event-block > a {
+  float: right;
+  margin-right: 10px;
+  margin-bottom: 15px;
+}
