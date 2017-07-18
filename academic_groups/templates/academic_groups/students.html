@@ -8,29 +8,26 @@
 
       <thead>
       <tr class="active">
-        <th></th>
-        <th colspan="{{ academic_group.exams.count }}" >Экзамены</th>
+        <th rowspan="2" style="padding: 27px 0; color: #FBFBFF">Cтудент</th>
+        <th colspan="{{ academic_group.exams.count }}" style="color: #FBFBFF">Экзамены</th>
+        <th rowspan="2" style="padding: 27px 0; color: #FBFBFF">Средний балл</th>
+      </tr>
+      <tr>
+        {% for exam in academic_group.exams.all %}
+          <th>{{ exam.name }}</th>
+        {% endfor %}
       </tr>
       </thead>
 
       <tbody>
-      <tr>
-        <th>ФИО</th>
-
-        {% for exam in academic_group.exams.all %}
-          <th>{{ exam.name }}</th>
-        {% endfor %}
-
-        <th>Ср.балл</th>
-      </tr>
 
       {% for student in academic_group.student_set.all %}
         <tr>
-          <th>
+          <td>
             <a class="for-hover" href="{% url 'groups:student' student.id %}" data-toggle="tooltip" data-placement="bottom" title="Перейти к профилю">
               {{ student.name }}
             </a>
-          </th>
+          </td>
 
           {% for examresult in student.examresult_set.all %}
             <td>{{ examresult.score }}</td>
@@ -44,7 +41,7 @@
 
     <div style="text-align: right">
       <a href="{% url 'groups:add_student' %}">
-        <button type="button" name="button" class="btn btn-success">Добавить студента</button>
+        <button type="button" name="button" class="btn btn-default">Добавить студента</button>
       </a>
 
       <div class="btn-group">
@@ -91,7 +88,7 @@
               </div>
 
               <div class="modal-footer">
-                <input type="submit" class="btn btn-success" value="Добавить">
+                <input type="submit" class="btn btn-default" value="Добавить">
                 <button class="btn btn-danger" data-dismiss="modal">Закрыть</button>
               </div>
             </form>
@@ -124,7 +121,7 @@
               </div>
 
               <div class="modal-footer">
-                <input type="submit" class="btn btn-success" value="Добавить">
+                <input type="submit" class="btn btn-default" value="Добавить">
                 <button class="btn btn-danger" data-dismiss="modal">Закрыть</button>
               </div>
             </form>
@@ -132,7 +129,7 @@
         </div>
       </div>
 
-      <a href="#" name="button" class="btn btn-success">Обновить результаты экзаменов</a>
+      <a href="#" name="button" class="btn btn-default">Обновить результаты экзаменов</a>
     </div>
 
   </div>

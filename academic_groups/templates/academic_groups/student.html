@@ -10,11 +10,11 @@
     </div>
 
     <div class="inform">
-      <p>Институт: {{ student.academic_group.institute }}</p>
-      <p>Группа: {{ student.academic_group.name }}</p>
-      <p>Курс: {{ student.academic_group.course }}</p>
-      <p>Куратор: {{ student.academic_group.curator }}</p>
-      <p>Староста: {{ student.academic_group.starosta.last_name }} {{ student.academic_group.starosta.first_name }}</p>
+      <p><b>Институт:</b> {{ student.academic_group.institute }}</p>
+      <p><b>Группа:</b> {{ student.academic_group.name }}</p>
+      <p><b>Курс:</b> {{ student.academic_group.course }}</p>
+      <p><b>Куратор:</b> {{ student.academic_group.curator }}</p>
+      <p><b>Староста:</b> {{ student.academic_group.starosta.last_name }} {{ student.academic_group.starosta.first_name }}</p>
     </div>
 
     <div class="exams">
@@ -39,7 +39,7 @@
       </table>
 
       <!-- Button trigger modal -->
-      <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#myModal" style="float: right">
+      <button type="button" class="btn btn-default btn-md" data-toggle="modal" data-target="#myModal" style="float: right">
         Изменить результаты экзаменов
       </button>
 

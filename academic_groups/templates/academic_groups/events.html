@@ -29,8 +29,9 @@
 
               {% endfor %}
             </ol>
-            <!-- BEGIN: add-stdent -->
+            <!-- BEGIN: add-student -->
             <button class="btn btn-default" data-toggle="modal" data-target="#add-student{{ event_group.id }}"><i class="fa fa-user-plus"></i> Добавить студента</button>
+
             <div id="add-student{{ event_group.id }}" class="modal fade" tabindex="-1">
                 <div class="modal-dialog modal-sm">
                   <form class="modal-content" action="{% url 'groups:event_add_student' %}" method="post">
@@ -64,7 +65,7 @@
                   </form>
                 </div>
               </div>
-              <!-- END: add-stdent -->
+              <!-- END: add-student -->
 
               <!-- BEGIN: delete_evebt -->
               <div style="float: right; margin-right: 15px">
@@ -72,6 +73,7 @@
                   {% csrf_token %}
                   <input type="hidden" name="event_group_id" value="{{ event_group.id }}">
                   <button class="btn btn-danger" type="submit" value="Удалить" name="button"><i class="fa fa-trash"></i> Удалить</button>
+
                 </form>
               </div>
                 <!-- END: delete_evebt -->
