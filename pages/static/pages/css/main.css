@@ -38,6 +38,17 @@ body {
   color: #FBFBFF;
 }
 
+.navbar-toggle {
+  background-color:#F8F8F8;
+}
+.navbar-header .navbar-toggle .icon-bar{
+   background-color: #888888;
+ }
+
+ .icon-bar{
+    background-color: #888888;
+  }
+
 .shadow {
   padding-bottom: 20px;
   box-shadow: 0 0 7px 1px;
@@ -70,13 +81,6 @@ body {
 
 .title_login {
   text-align: center;
-}
-
-.events-tabs {
-  float: right;
-  display: inline-block;
-  margin-right: 30px;
-  margin-bottom: 5px;
 }
 
 .title_login > h2 {

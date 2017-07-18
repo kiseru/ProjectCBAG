@@ -1,38 +1,54 @@
 
-{% extends 'authorization/header.html' %}
+{% extends 'academic_groups/header_jury.html' %}
+
 
 {% block content %}
 
-  <div class="container shadow">
 
+
+  <div class="container shadow" style="padding-top: 50px">
     <div class="panel-group" id="collapse-group">
         <div class="panel panel-info">
-          <div class="panel-heading">
-            <a data-toggle="collapse" data-parent="#collapse-group" href="#el1"><h2>Группа: 11-601</h2></a>
-          </div>
+          <a href="#el1" data-toggle="collapse" data-parent="#collapse-group">
+            <div class="panel-heading">
+              <h3><b>Название группы:</b> {{ event_group }}</h3><br>
+            </div>
+          </a>
         <div id="el1" class="collapse container event-block">
           <div class="panel-body event-block">
             <ul class="list-group">
-              <li>Нет доп. сессий</li>
-              <li>Лучший певец про зяблика</li>
-              <li>Активные участники студвесны</li>
-              <li>5 стобальников</li>
-              <li>Участники:</li>
-            </ul>
-            <ul class="list-group">
-              <li class="list-group-item">Аймурзин Айнур</li>
-              <li class="list-group-item">Киселёв Александр</li>
-              <li class="list-group-item">Аймурзин Айнур</li>
-              <li class="list-group-item">Киселёв Александр</li>
-              <li class="list-group-item">Аймурзин Айнур</li>
-              <li class="list-group-item">Киселёв Александр</li>
-              <li class="list-group-item">Аймурзин Айнур</li>
-              <li class="list-group-item">Киселёв Александр</li>
-            </ul>
+              <li>
+                <a data-toggle="modal" data-target="#myModal">КМС по теннису</a>
+                <div id="myModal" class="modal fade" tabindex="-1">
+                  <div class="modal-dialog modal-md">
+                    <form class="modal-content" action="" method="post">
+                      <div class="modal-header">
+                        <h2 class="modal-title"><b>КМС по теннису</b></h2>
+                      </div>
 
+                      <div class="modal-body" style="margin-left: 110px">
+
+                        <h3><b>Мероприятие:</b> турнир по теннису</h3>
+                        <h3><b>Область:</b> научная деятельность</h3>
+                        <h3><b>Уровень:</b> международный</h3>
+                        <h3><b>Место:</b> 1</h3>
+                        <h3><b>Список студентов</b></h3>
+                          <ul>
+                            <li>Некто Спортивный</li>
+                            <li>Некто Спортивный</li>
+                            <li>Некто Спортивный</li>
+                          </ul>
+
+                      </div>
+                      <div class="modal-footer">
+                        <a href="#"><button class="btn btn-danger" type="button" data-dismiss="modal" name="button">Закрыть</button></a>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </li>
+            </ul>
           </div>
-          <a href="#"><button class="btn btn-success btn-lg" type="button" name="button" value="Проверить">Проверить</button></a>
-
         </div>
       </div>
 

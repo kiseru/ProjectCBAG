@@ -2,43 +2,32 @@
 
 {% block header %}
     <nav class="navbar navbar-top">
-        <div class="container">
-            <div class="navbar-header">
-{#                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">#}
-{#                    <span class="sr-only">Toggle navigation</span>#}
-{#                    <span class="icon-bar"></span>#}
-{#                    <span class="icon-bar"></span>#}
-{#                    <span class="icon-bar"></span>#}
-{#                </button>#}
+    <div class="container">
+      <div class="navbar-header">
+        <button  style="background-color:#F8F8F8" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span  style="background-color: #888888"class="icon-bar"></span>
+          <span style="background-color: #888888"class="icon-bar"></span>
+          <span style="background-color: #888888" class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand collapse navbar-collapse" href="{% url 'home' %}">
+            Project CB<i style="margin-right:2px; margin-left:2px; font-size: 30px" class="glyphicon glyphicon-text-background"></i>G
+            <i style="font-size: 40px" class="fa fa-university"></i>
+        </a>
+      </div>
+      <div style="text-align: center" id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="{% url 'groups:students' %}" class="header-button">Студенты</a></li>
+            <li><a class="header-button active-header-button" href="{% url 'groups:events' %}">Мероприятия</a></li>
 
-                <a class="navbar-brand" href="{% url 'home' %}">
-                    Project CB
-                    <i style="font-size: 30px" class="glyphicon glyphicon-text-background"></i>
-                    G
-                    <i style="font-size: 40px" class="fa fa-university"></i>
-                </a>
-            </div>
-
-            <div style="text-align: center"id="navbar" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="{% url 'groups:students' %}" class="header-button">Студенты</a>
-                    </li>
-
-                    <li>
-                        <a class="header-button active-header-button" href="{% url 'groups:events' %}">Мероприятия</a>
-                    </li>
-
-                    <li class="dropdown" style="right: -290px">
-                        <a href="#" class="dropdown-toggle user-table" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ name }}<span class="caret"></span></a>
-
-                        <ul class="dropdown-menu">
-                            <li><a class="log-out" href="{% url 'auth:log_out' %}">Выход</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div><!--/.nav-collapse -->
-        </div>
+            <li class="dropdown" style="right: -290px">
+              <a href="#" class="dropdown-toggle user-table" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ name }}<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                  <li><a class="log-out" href="{% url 'auth:log_out' %}">Выход</a></li>
+              </ul>
+            </li>
+          </ul>
+      </div><!--/.nav-collapse -->
+    </div>
     </nav>
 
     {% block content %}
