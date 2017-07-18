@@ -262,3 +262,7 @@ th {
   margin-right: 10px;
   margin-bottom: 15px;
 }
+
+.list-group {
+    margin-left: 20px;
+}

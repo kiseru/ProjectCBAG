@@ -4,56 +4,67 @@
 
 {% block content %}
 
-  {% for academic_group in academic_groups.object.all %}
-  {% endfor %}
-
   <div class="container shadow" style="padding-top: 50px">
-    <div class="panel-group" id="collapse-group">
+
+    {% for academic_group in academic_groups %}
+
+      <div class="panel-group" id="collapse-group">
         <div class="panel panel-info">
-          <a href="#el1" data-toggle="collapse" data-parent="#collapse-group">
+          <a href="#el{{ academic_group.id }}" data-toggle="collapse" data-parent="#collapse-group">
             <div class="panel-heading">
-              <h3><b>Название группы:</b> {{ event_group }}</h3><br>
+              <h3><b>Название группы:</b> {{ academic_group }}</h3><br>
             </div>
           </a>
-        <div id="el1" class="collapse container event-block">
-          <div class="panel-body event-block">
-            <ul class="list-group">
-              <li>
-                <a data-toggle="modal" data-target="#myModal">КМС по теннису</a>
-                <div id="myModal" class="modal fade" tabindex="-1">
-                  <div class="modal-dialog modal-md">
-                    <form class="modal-content" action="" method="post">
-                      <div class="modal-header">
-                        <h2 class="modal-title"><b>КМС по теннису</b></h2>
-                      </div>
 
-                      <div class="modal-body" style="margin-left: 110px">
+          <div id="el{{ academic_group.id }}" class="collapse container event-block">
+            <div class="panel-body event-block">
+              <ul class="list-group">
 
-                        <h3><b>Мероприятие:</b> турнир по теннису</h3>
-                        <h3><b>Область:</b> научная деятельность</h3>
-                        <h3><b>Уровень:</b> международный</h3>
-                        <h3><b>Место:</b> 1</h3>
-                        <h3><b>Список студентов</b></h3>
-                          <ul>
-                            <li>Некто Спортивный</li>
-                            <li>Некто Спортивный</li>
-                            <li>Некто Спортивный</li>
-                          </ul>
+                {% for event_group in academic_group.eventgroup_set.all %}
 
+                  <li>
+                    <a data-toggle="modal" data-target="#modal{{ event_group.id }}">{{ event_group.event_name }}</a>
+                    <div id="modal{{ event_group.id }}" class="modal fade" tabindex="-1">
+                      <div class="modal-dialog modal-md">
+                        <form class="modal-content" action="" method="post">
+                          <div class="modal-header">
+                            <h2 class="modal-title"><b>{{ event_group.event_name }}</b></h2>
+                          </div>
+
+                          <div class="modal-body" style="margin-left: 110px">
+
+                            <h3><b>Группа-участник: </b>{{ event_group }}</h3>
+                            <h3><b>Область: </b>{{ event_group.get_event_area_display }}</h3>
+                            <h3><b>Уровень: </b>{{ event_group.get_event_level_display }}</h3>
+                            <h3><b>Место: </b>{{ event_group.get_prize_winning_place_display }}</h3>
+                            <h3><b>Список студентов</b></h3>
+                            <ul>
+
+                              {% for student in event_group.student_event.all %}
+                                <li>{{ student }}</li>
+                              {% endfor %}
+
+                            </ul>
+
+                          </div>
+
+                          <div class="modal-footer">
+                            <a href="#"><button class="btn btn-danger" type="button" data-dismiss="modal" name="button">Закрыть</button></a>
+                          </div>
+                        </form>
                       </div>
-                      <div class="modal-footer">
-                        <a href="#"><button class="btn btn-danger" type="button" data-dismiss="modal" name="button">Закрыть</button></a>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </li>
-            </ul>
+                    </div>
+                  </li>
+
+                {% endfor %}
+
+              </ul>
+            </div>
           </div>
         </div>
       </div>
 
-    </div>
+    {% endfor %}
 
   </div>
 

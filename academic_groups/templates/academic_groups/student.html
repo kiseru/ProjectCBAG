@@ -67,18 +67,12 @@
 
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-              <input type="submit" class="btn btn-primary" value="Изменить">
+              <input type="submit" class="btn btn-default" value="Изменить">
             </div>
 
           </form>
         </div>
       </div>
-
-    </div>
-
-    <div>
-      <h1>Events are coming soon</h1>
-    </div>
 
     <form action="{% url 'groups:delete_student' student.id %}" method="post">
       {% csrf_token %}
