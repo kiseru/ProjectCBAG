@@ -199,7 +199,8 @@ def delete_event_group(request):
 def jury(request):
 
     context = {
-
+        'academic_groups': AcademicGroup.objects.all(),
+        'name': '{0} {1}'.format(request.user.first_name, request.user.last_name),
     }
 
     return render(request, 'academic_groups/jury.html', context)

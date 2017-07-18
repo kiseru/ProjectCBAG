@@ -4,7 +4,8 @@
 
 {% block content %}
 
-
+  {% for academic_group in academic_groups.object.all %}
+  {% endfor %}
 
   <div class="container shadow" style="padding-top: 50px">
     <div class="panel-group" id="collapse-group">
