@@ -2,8 +2,8 @@
 
 {% block content %}
   <div class="container shadow">
-    <h2>Результаты экзаменов</h2>
-    <p>Группа: {{ academic_group.name }}</p>
+    <h2><b>Результаты экзаменов<b></h2>
+    <h3>Группа: {{ academic_group.name }}</h3>
     <table class="table table-bordered table-hover table-striped">
 
       <thead>
@@ -41,7 +41,7 @@
 
     <div style="text-align: right">
       <a href="{% url 'groups:add_student' %}">
-        <button type="button" name="button" class="btn btn-default">Добавить студента</button>
+        <button type="button" name="button" class="btn btn-default"><i class="fa fa-user-plus"></i> Добавить студента</button>
       </a>
 
       <div class="btn-group">
@@ -128,8 +128,8 @@
           </div>
         </div>
       </div>
+      <a href="#"><button class="btn btn-default" style="width: 240px" type="button" name="button"><i class="glyphicon glyphicon-refresh"></i> Обновить результаты экзаменов</button></a>
 
-      <a href="#" name="button" class="btn btn-default">Обновить результаты экзаменов</a>
     </div>
 
   </div>

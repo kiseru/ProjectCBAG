@@ -83,13 +83,6 @@ body {
   text-align: center;
 }
 
-.events-tabs {
-  float: right;
-  display: inline;
-  margin-right: 30px;
-  margin-bottom: 5px;
-}
-
 .title_login > h2 {
   font-weight: bold;
   color: #0B4F6C;
