@@ -198,6 +198,8 @@ def delete_event_group(request):
 @should_be_jury
 def jury(request):
 
-    context = {}
+    context = {
+
+    }
 
     return render(request, 'academic_groups/jury.html', context)
