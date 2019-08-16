@@ -24,6 +24,7 @@ class LoginFormView(generic.View):
         return render(request, self.template, {'form', form})
 
 
-def log_out(request):
-    logout(request)
-    return redirect(reverse('home'))
+class LogoutView(generic.View):
+    def get(self, request):
+        logout(request)
+        return redirect(reverse('home'))

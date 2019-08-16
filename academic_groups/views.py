@@ -1,14 +1,11 @@
-from django.http import HttpResponseForbidden, Http404
+from django.http import Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from academic_groups.models import Exam, ExamResult, Student, AcademicGroup, EventGroup
 
-from pages.decorators import should_be_starosta, should_be_jury
-
 
 # Create your views here.
-@should_be_starosta
 def students(request):
     user = request.user
     academic_group = user.academicgroup
@@ -22,7 +19,6 @@ def students(request):
     return render(request, 'academic_groups/students.html', context=context)
 
 
-@should_be_starosta
 def add_student(request):
     user = request.user
     academic_group = user.academicgroup
@@ -62,7 +58,6 @@ def add_student(request):
         return Http404()
 
 
-@should_be_starosta
 def student_show(request, student_id):
     student = Student.objects.get(pk=student_id)
 
@@ -75,7 +70,6 @@ def student_show(request, student_id):
     return render(request, 'academic_groups/student.html', context)
 
 
-@should_be_starosta
 def edit_student_exams(request, student_id):
     if request.POST:
         student = Student.objects.get(pk=student_id)
@@ -93,7 +87,6 @@ def edit_student_exams(request, student_id):
         return Http404()
 
 
-@should_be_starosta
 def delete_student(request, student_id):
     if request.POST:
         student = Student.objects.get(pk=student_id)
@@ -103,7 +96,6 @@ def delete_student(request, student_id):
     return Http404()
 
 
-@should_be_starosta
 def add_exam(request):
     if request.POST:
         exam = Exam.objects.get(pk=request.POST['exam_id'])
@@ -120,7 +112,6 @@ def add_exam(request):
         return redirect(reverse('home'))
 
 
-@should_be_starosta
 def delete_exam(request):
     if request.POST:
         academic_group = request.user.academicgroup
@@ -136,9 +127,7 @@ def delete_exam(request):
     return Http404()
 
 
-@should_be_starosta
 def events(request):
-
     context = {
         'academic_group': request.user.academicgroup,
         'name': '{0} {1}'.format(request.user.first_name, request.user.last_name),
@@ -147,7 +136,6 @@ def events(request):
     return render(request, 'academic_groups/events.html', context)
 
 
-@should_be_starosta
 def add_event(request):
     if request.POST:
         event_group = EventGroup()
@@ -161,10 +149,8 @@ def add_event(request):
         return redirect(reverse('groups:events'))
 
 
-@should_be_starosta
 def event_add_student(request):
     if request.POST:
-
         event_group = EventGroup.objects.get(pk=request.POST['event_group_id'])
         student = Student.objects.get(pk=request.POST['student'])
         event_group.student_event.add(student)
@@ -173,7 +159,6 @@ def event_add_student(request):
         return redirect(reverse('groups:events'))
 
 
-@should_be_starosta
 def edit_event_group(request):
     if request.POST:
         event_group = EventGroup.objects.get(pk=request.POST['event_id'])
@@ -186,7 +171,6 @@ def edit_event_group(request):
         return redirect(reverse('groups:events'))
 
 
-@should_be_starosta
 def delete_event_group(request):
     if request.POST:
         event_group = EventGroup.objects.get(pk=request.POST['event_group_id'])
@@ -195,9 +179,7 @@ def delete_event_group(request):
         return redirect(reverse('groups:events'))
 
 
-@should_be_jury
 def jury(request):
-
     context = {
         'academic_groups': AcademicGroup.objects.all(),
         'name': '{0} {1}'.format(request.user.first_name, request.user.last_name),
