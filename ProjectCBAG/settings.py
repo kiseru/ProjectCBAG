@@ -25,9 +25,7 @@ SECRET_KEY = 'ze+n$kvp66tk6h9)^j!0q8p!$n3b-=3u)mc$(l2z6dp3g*x4fn'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    '62.109.30.239',
-]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -59,7 +57,7 @@ ROOT_URLCONF = 'ProjectCBAG.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -123,6 +121,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
 
 LOGIN_URL = '/auth/log_in'
 

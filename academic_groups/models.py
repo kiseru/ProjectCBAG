@@ -25,7 +25,7 @@ class AcademicGroup(models.Model):
     institute = models.CharField(max_length=200)
     course = models.PositiveSmallIntegerField(default=1)
     name = models.CharField(max_length=6)
-    starosta = models.OneToOneField(User)
+    starosta = models.OneToOneField(User, on_delete=models.CASCADE)
     starosta_phone_number = models.CharField(max_length=12, validators=[validate_telephone_number])
     exams = models.ManyToManyField(Exam, blank=True)
     curator = models.CharField(max_length=50)
