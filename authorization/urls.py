@@ -1,11 +1,10 @@
-from django.conf.urls import url
+from django.urls import path
 
-from . import views
-
+from authorization import views
 
 app_name = 'auth'
 
 urlpatterns = [
-    url(r'^log_in/$', views.log_in, name='log_in'),
-    url(r'^log_out/$', views.log_out, name='log_out'),
+    path('login/', views.LoginFormView.as_view(), name='login'),
+    path('logout/', views.log_out, name='logout'),
 ]

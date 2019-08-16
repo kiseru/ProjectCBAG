@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <div class="row justify-content-center align-items-center" style="min-height: 100vh">
+      <div class="col-12 col-md-5">
+        <h2 class="text-center">Войти</h2>
+
+        <form action="{% url 'auth:login' %}" method="post">
+
+          {% csrf_token %}
+
+          {% for field in form %}
+            <div class="form-group">
+              {{ field.label_tag }}
+              {{ field }}
+            </div>
+          {% endfor %}
+
+          <button class="btn btn-primary btn-block">Войти</button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse
 
 
@@ -10,7 +10,7 @@ def home(request):
     context = {
         'first_name': user.first_name,
         'last_name': user.last_name,
-        'group': user.groups.get().name,
+        'group': ''
     }
 
     if context['group'] == 'Starostas':
@@ -18,4 +18,4 @@ def home(request):
     elif context['group'] == 'Jury':
         return redirect(reverse('groups:jury'))
 
-    return render(request, 'pages/../templates/home.html', context)
+    return render(request, 'home.html', context)

@@ -126,7 +126,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 
-LOGIN_URL = '/auth/log_in'
+LOGIN_URL = '/auth/login'
 
 
 

@@ -1,24 +1,27 @@
 from django.contrib.auth import authenticate, login, logout
-from django.http import Http404, HttpResponse
 from django.shortcuts import render, redirect
-
-
-# Create your views here.
 from django.urls import reverse
+from django.views import generic
+
+from authorization.forms import LoginForm
 
 
-def log_in(request):
-    if request.method == 'GET':
-        return render(request, 'authorization/log_in.html')
-    elif request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            login(request, user)
-        return redirect(reverse('home'))
-    else:
-        return Http404()
+class LoginFormView(generic.View):
+    form_class = LoginForm
+    template = 'authorization/login.html'
+
+    def get(self, request):
+        form = self.form_class()
+        return render(request, self.template, {'form': form})
+
+    def post(self, request):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
+            if user is not None:
+                login(request, user)
+                return redirect(reverse('home'))
+        return render(request, self.template, {'form', form})
 
 
 def log_out(request):
