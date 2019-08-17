@@ -25,7 +25,7 @@
       <tbody>
       {% for student in object.student_set.all %}
         <tr>
-          <td>{{ student.name }}</td>
+          <td><a href="{% url 'groups:student_detail' student.pk %}">{{ student.name }}</a></td>
           {% for examresult in student.examresult_set.all %}
             <td>{{ examresult.score }}</td>
           {% endfor %}

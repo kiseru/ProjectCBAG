@@ -16,6 +16,11 @@ class AcademicGroupDetailView(LoginRequiredMixin,
         return self.request.user.groups.get().name == 'headman'
 
 
+class StudentDetailView(LoginRequiredMixin,
+                        generic.DetailView):
+    model = Student
+
+
 def add_student(request):
     user = request.user
     academic_group = user.academicgroup
@@ -53,18 +58,6 @@ def add_student(request):
         return redirect(reverse("groups:students"))
     else:
         return Http404()
-
-
-def student_show(request, student_id):
-    student = Student.objects.get(pk=student_id)
-
-    context = {
-        'student': student,
-        'student_exams': student.examresult_set.filter(student=student),
-        'name': '{0} {1}'.format(request.user.first_name, request.user.last_name),
-    }
-
-    return render(request, 'academic_groups/student.html', context)
 
 
 def edit_student_exams(request, student_id):
