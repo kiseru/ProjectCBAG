@@ -1,11 +1,12 @@
 from django.conf.urls import url
+from django.urls import path
 
 from . import views
 
 app_name = 'groups'
 
 urlpatterns = [
-    url(r'^students/$', views.students, name='students'),
+    path('academic_groups/<int:pk>', views.AcademicGroupDetailView.as_view(), name='academicgroup_detail'),
     url(r'^add_student/$', views.add_student, name='add_student'),
     url(r'^students/add_exam/$', views.add_exam, name='add_exam'),
     url(r'^student/(?P<student_id>[0-9]+)/$', views.student_show, name='student'),

@@ -1,21 +1,16 @@
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, render
-from django.urls import reverse
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect
+from django.urls import reverse, reverse_lazy
+from django.views import generic
 
 
-@login_required()
-def home(request):
-    user = request.user
-
-    context = {
-        'first_name': user.first_name,
-        'last_name': user.last_name,
-        'group': ''
-    }
-
-    if context['group'] == 'Starostas':
-        return redirect(reverse('groups:students'))
-    elif context['group'] == 'Jury':
-        return redirect(reverse('groups:jury'))
-
-    return render(request, 'home.html', context)
+class HomeView(
+               generic.View):
+    def get(self, request):
+        group_name = request.user.groups.get().name
+        if group_name == 'headman':
+            return redirect(reverse('groups:academicgroup_detail', args=(request.user.academicgroup.pk,)))
+        elif group_name == 'jury':
+            return redirect(reverse('groups:jury'))
+        else:
+            return redirect(reverse('auth:logout'))

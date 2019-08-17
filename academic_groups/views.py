@@ -1,22 +1,19 @@
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.views import generic
 
 from academic_groups.models import Exam, ExamResult, Student, AcademicGroup, EventGroup
 
 
-# Create your views here.
-def students(request):
-    user = request.user
-    academic_group = user.academicgroup
+class AcademicGroupDetailView(LoginRequiredMixin,
+                              UserPassesTestMixin,
+                              generic.DetailView):
+    model = AcademicGroup
 
-    context = {
-        'academic_group': academic_group,
-        'exams': Exam.objects.all(),
-        'name': '{0} {1}'.format(user.first_name, user.last_name),
-    }
-
-    return render(request, 'academic_groups/students.html', context=context)
+    def test_func(self):
+        return self.request.user.groups.get().name == 'headman'
 
 
 def add_student(request):

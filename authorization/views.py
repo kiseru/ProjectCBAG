@@ -21,7 +21,7 @@ class LoginFormView(generic.View):
             if user is not None:
                 login(request, user)
                 return redirect(reverse('home'))
-        return render(request, self.template, {'form', form})
+        return render(request, self.template, {'form': form})
 
 
 class LogoutView(generic.View):

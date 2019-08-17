@@ -1,6 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models import Sum
 
 
 def validate_telephone_number(telephone_number):
@@ -42,7 +43,10 @@ class Student(models.Model):
     ])
     academic_group = models.ForeignKey(AcademicGroup, on_delete=models.CASCADE)
     student_exam = models.ManyToManyField(Exam, through='ExamResult', through_fields=('student', 'exam'))
-    average_score = models.PositiveSmallIntegerField(default=0)
+
+    @property
+    def average_score(self):
+        return self.student_exam.aggregate(sum_score=Sum('examresult__score'))['sum_score'] / self.student_exam.count()
 
     def __str__(self):
         return self.name
@@ -54,7 +58,7 @@ class ExamResult(models.Model):
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.score
+        return str(self.score)
 
 
 class EventGroup(models.Model):

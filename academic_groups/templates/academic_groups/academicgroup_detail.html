@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  {% include 'academic_groups/header.html' %}
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h2>Результаты экзаменов</h2>
+    <h4>Группа: {{ object.name }}</h4>
+
+    <table class="table table-bordered table-hover">
+      <thead class="thead-dark bg-primary">
+      <tr class="bg-primary">
+        <th rowspan="2" scope="col">Студент</th>
+        <th colspan="{{ object.exams.count }}" scope="col">Экзамены</th>
+        <th rowspan="2" scope="col">Средний балл</th>
+      </tr>
+      <tr>
+        {% for exam in object.exams.all %}
+          <th>{{ exam.name }}</th>
+        {% endfor %}
+      </tr>
+      </thead>
+      <tbody>
+      {% for student in object.student_set.all %}
+        <tr>
+          <td>{{ student.name }}</td>
+          {% for examresult in student.examresult_set.all %}
+            <td>{{ examresult.score }}</td>
+          {% endfor %}
+          <td>{{ student.average_score }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="d-flex flex-column flex-md-row justify-content-end">
+      <a class="btn btn-primary mx-0 mx-md-1 my-1 my-md-0" href="#" role="button">Добавить студента</a>
+      <a class="btn btn-primary mx-0 mx-md-1 my-1 my-md-0" href="#" role="button">Добавить студента</a>
+      <a class="btn btn-primary mx-0 mx-md-1 my-1 my-md-0" href="#" role="button">Обновить результаты экзаменов</a>
+    </div>
+  </div>
+{% endblock %}
