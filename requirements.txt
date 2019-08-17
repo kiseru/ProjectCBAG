@@ -1,1 +1,2 @@
-django
+django==2.2.4
+django-choices==1.7.0

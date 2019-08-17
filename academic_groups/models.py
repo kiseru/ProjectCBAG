@@ -1,7 +1,8 @@
+import djchoices
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.contrib.auth.models import User
-from django.db.models import Sum
+from django.db.models import Avg
 
 
 def validate_telephone_number(telephone_number):
@@ -46,7 +47,7 @@ class Student(models.Model):
 
     @property
     def average_score(self):
-        return self.student_exam.aggregate(sum_score=Sum('examresult__score'))['sum_score'] / self.student_exam.count()
+        return self.student_exam.aggregate(average_score=Avg('examresult__score'))['average_score']
 
     def __str__(self):
         return self.name
@@ -61,31 +62,35 @@ class ExamResult(models.Model):
         return str(self.score)
 
 
+class WinningPlaceChoices(djchoices.DjangoChoices):
+    first = djchoices.ChoiceItem(1, '1 место')
+    second = djchoices.ChoiceItem(2, '2 место')
+    third = djchoices.ChoiceItem(3, '3 место')
+    participation = djchoices.ChoiceItem(0, 'участие')
+
+
+class EventAreaChoices(djchoices.DjangoChoices):
+    scientific = djchoices.ChoiceItem(0, 'Научная')
+    cultural = djchoices.ChoiceItem(1, 'Культурная')
+    sports = djchoices.ChoiceItem(2, 'Спортивная')
+    social = djchoices.ChoiceItem(4, 'Общественная')
+
+
+class EventLevelChoices(djchoices.DjangoChoices):
+    international = djchoices.ChoiceItem(0, 'Международный')
+    all_russian = djchoices.ChoiceItem(1, 'Всероссийский')
+    regional = djchoices.ChoiceItem(2, 'Региональный')
+    urban = djchoices.ChoiceItem(3, 'Городской')
+    university = djchoices.ChoiceItem(4, 'Университетский')
+
+
 class EventGroup(models.Model):
     name = models.CharField(max_length=30)
-
-    prize_winning_place = models.CharField(max_length=1, choices=[
-        ('0', 'участие'),
-        ('1', '1 место'),
-        ('2', '2 место'),
-        ('3', '3 место'),
-    ])
+    prize_winning_place = models.PositiveSmallIntegerField(choices=WinningPlaceChoices.choices)
     student_event = models.ManyToManyField(Student, blank=True)
     event_name = models.CharField(max_length=200)
-    event_area = models.CharField(max_length=1, choices=[
-        ('n', 'Научная'),
-        ('k', 'Культурно-массовая'),
-        ('s', 'Спортивная'),
-        ('o', 'Общественная')
-    ])
-    event_level = models.CharField(max_length=1, choices=[
-        ('m', 'Международный'),
-        ('v', 'Всероссийский'),
-        ('r', 'Региональный'),
-        ('g', 'Городской'),
-        ('u', 'Университетский'),
-    ])
-
+    event_area = models.PositiveSmallIntegerField(choices=EventAreaChoices)
+    event_level = models.PositiveSmallIntegerField(choices=EventLevelChoices)
     academic_group = models.ForeignKey(AcademicGroup, on_delete=models.CASCADE)
 
     def __str__(self):
