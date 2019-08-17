@@ -11,6 +11,7 @@ def transfer_event_group_values_forward(apps, schema_editor):
     for event_group in EventGroup.objects.all():
         event_group.event_area_temp = event_area_mapping.index(event_group.event_area)
         event_group.event_level_temp = event_level_mapping.index(event_group.event_level)
+        event_group.save()
 
 
 def transfer_event_group_values_backward(apps, schema_editor):
@@ -18,6 +19,7 @@ def transfer_event_group_values_backward(apps, schema_editor):
     for event_group in EventGroup.objects.all():
         event_group.event_area = event_area_mapping[event_group.event_area_temp]
         event_group.event_level = event_level_mapping[event_group.event_level_temp]
+        event_group.save()
 
 
 class Migration(migrations.Migration):
