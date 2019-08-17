@@ -36,12 +36,14 @@ class AcademicGroup(models.Model):
         return self.name
 
 
+class EducationalFormChoices(djchoices.DjangoChoices):
+    budget = djchoices.ChoiceItem(0, 'Бюджет')
+    contract = djchoices.ChoiceItem(1, 'Контракт')
+
+
 class Student(models.Model):
     name = models.CharField(max_length=50)
-    educational_form = models.CharField(max_length=1, choices=[
-        ('b', 'Бюджет'),
-        ('k', 'Контракт'),
-    ])
+    educational_form = models.PositiveSmallIntegerField(choices=EducationalFormChoices.choices)
     academic_group = models.ForeignKey(AcademicGroup, on_delete=models.CASCADE)
     student_exam = models.ManyToManyField(Exam, through='ExamResult', through_fields=('student', 'exam'))
 
