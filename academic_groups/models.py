@@ -82,13 +82,6 @@ class ExamResult(models.Model):
         return str(self.score)
 
 
-class WinningPlaceChoices(djchoices.DjangoChoices):
-    first = djchoices.ChoiceItem(1, '1 место')
-    second = djchoices.ChoiceItem(2, '2 место')
-    third = djchoices.ChoiceItem(3, '3 место')
-    participation = djchoices.ChoiceItem(0, 'участие')
-
-
 class EventAreaChoices(djchoices.DjangoChoices):
     scientific = djchoices.ChoiceItem(0, 'Научная')
     cultural = djchoices.ChoiceItem(1, 'Культурная')
@@ -104,18 +97,36 @@ class EventLevelChoices(djchoices.DjangoChoices):
     university = djchoices.ChoiceItem(4, 'Университетский')
 
 
+class Event(models.Model):
+    name = models.CharField(max_length=200, verbose_name='Название мероприятия')
+    area = models.PositiveSmallIntegerField(choices=EventAreaChoices,
+                                            verbose_name='Область мероприятия')
+    level = models.PositiveSmallIntegerField(choices=EventLevelChoices,
+                                             verbose_name='Уровень мероприятия')
+
+    class Meta:
+        verbose_name = 'Мероприятие'
+        verbose_name_plural = 'Мероприятия'
+
+    def __str__(self):
+        return self.name
+
+
+class WinningPlaceChoices(djchoices.DjangoChoices):
+    first = djchoices.ChoiceItem(1, '1 место')
+    second = djchoices.ChoiceItem(2, '2 место')
+    third = djchoices.ChoiceItem(3, '3 место')
+    participation = djchoices.ChoiceItem(0, 'участие')
+
+
 class EventGroup(models.Model):
     name = models.CharField(max_length=30, verbose_name='Название')
     prize_winning_place = models.PositiveSmallIntegerField(choices=WinningPlaceChoices.choices,
                                                            verbose_name='Призовое место')
-    student_event = models.ManyToManyField(Student, blank=True, verbose_name='Студенты')
-    event_name = models.CharField(max_length=200, verbose_name='Название мероприятия')
-    event_area = models.PositiveSmallIntegerField(choices=EventAreaChoices,
-                                                  verbose_name='Область мероприятия')
-    event_level = models.PositiveSmallIntegerField(choices=EventLevelChoices,
-                                                   verbose_name='Уровень мероприятия')
+    students = models.ManyToManyField(Student, blank=True, verbose_name='Студенты')
     academic_group = models.ForeignKey(AcademicGroup, on_delete=models.CASCADE,
                                        verbose_name='Академическая группа')
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, verbose_name='Мероприятие')
 
     class Meta:
         verbose_name = 'Группа мероприятия'

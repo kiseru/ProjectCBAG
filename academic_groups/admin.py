@@ -8,16 +8,7 @@ class StudentInline(admin.TabularInline):
     extra = 0
 
 
-class ExamInline(admin.TabularInline):
-    model = models.Exam
-    extra = 0
-
-
-class ExamResultInline(admin.TabularInline):
-    model = models.ExamResult
-    extra = 0
-
-
+@admin.register(models.AcademicGroup)
 class AcademicGroupAdmin(admin.ModelAdmin):
     list_display = [
         'name',
@@ -39,6 +30,12 @@ class AcademicGroupAdmin(admin.ModelAdmin):
     ]
 
 
+class ExamResultInline(admin.TabularInline):
+    model = models.ExamResult
+    extra = 0
+
+
+@admin.register(models.Student)
 class StudentAdmin(admin.ModelAdmin):
     list_display = [
         'name',
@@ -60,13 +57,20 @@ class StudentAdmin(admin.ModelAdmin):
     ]
 
 
-class CuratorAdmin(admin.ModelAdmin):
-    inlines = [
-        StudentInline,
-    ]
+@admin.register(models.Exam)
+class ExamAdmin(admin.ModelAdmin):
+    search_fields = ('name',)
 
 
-admin.site.register(models.AcademicGroup, AcademicGroupAdmin)
-admin.site.register(models.Student, StudentAdmin)
-admin.site.register(models.Exam)
-admin.site.register(models.EventGroup)
+@admin.register(models.EventGroup)
+class EventGroupAdmin(admin.ModelAdmin):
+    list_display = ('name', 'event', 'academic_group', 'prize_winning_place')
+    list_filter = ('prize_winning_place',)
+    search_fields = ('name',)
+
+
+@admin.register(models.Event)
+class EventAdmin(admin.ModelAdmin):
+    list_display = ('name', 'area', 'level')
+    list_filter = ('area', 'level')
+    search_fields = ('name',)
