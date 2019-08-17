@@ -17,7 +17,7 @@ class Exam(models.Model):
     """
     List of exam
     """
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, verbose_name='Название')
 
     class Meta:
         verbose_name = 'Экзамен'
@@ -28,13 +28,14 @@ class Exam(models.Model):
 
 
 class AcademicGroup(models.Model):
-    institute = models.CharField(max_length=200)
-    course = models.PositiveSmallIntegerField(default=1)
-    name = models.CharField(max_length=6)
-    starosta = models.OneToOneField(User, on_delete=models.CASCADE)
-    starosta_phone_number = models.CharField(max_length=12, validators=[validate_telephone_number])
-    exams = models.ManyToManyField(Exam, blank=True)
-    curator = models.CharField(max_length=50)
+    institute = models.CharField(max_length=200, verbose_name='Институт')
+    course = models.PositiveSmallIntegerField(default=1, verbose_name='Курс')
+    name = models.CharField(max_length=6, verbose_name='Название')
+    starosta = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='Староста')
+    starosta_phone_number = models.CharField(max_length=12, validators=[validate_telephone_number],
+                                             verbose_name='Номер старосты')
+    exams = models.ManyToManyField(Exam, blank=True, verbose_name='Экзамены')
+    curator = models.CharField(max_length=50, verbose_name='Куратор')
 
     class Meta:
         verbose_name = 'Академическая группа'
@@ -50,9 +51,10 @@ class EducationalFormChoices(djchoices.DjangoChoices):
 
 
 class Student(models.Model):
-    name = models.CharField(max_length=50)
-    educational_form = models.PositiveSmallIntegerField(choices=EducationalFormChoices.choices)
-    academic_group = models.ForeignKey(AcademicGroup, on_delete=models.CASCADE)
+    name = models.CharField(max_length=50, verbose_name='ФИО')
+    educational_form = models.PositiveSmallIntegerField(choices=EducationalFormChoices.choices,
+                                                        verbose_name='Форма обучения')
+    academic_group = models.ForeignKey(AcademicGroup, on_delete=models.CASCADE, verbose_name='Академическая группа')
     student_exam = models.ManyToManyField(Exam, through='ExamResult', through_fields=('student', 'exam'))
 
     class Meta:
@@ -68,9 +70,9 @@ class Student(models.Model):
 
 
 class ExamResult(models.Model):
-    score = models.PositiveSmallIntegerField(default=0)
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
+    score = models.PositiveSmallIntegerField(default=0, verbose_name='Баллы')
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, verbose_name='Студент')
+    exam = models.ForeignKey(Exam, on_delete=models.CASCADE, verbose_name='Экзамен')
 
     class Meta:
         verbose_name = 'Результат экзамена'
@@ -103,17 +105,21 @@ class EventLevelChoices(djchoices.DjangoChoices):
 
 
 class EventGroup(models.Model):
-    name = models.CharField(max_length=30)
-    prize_winning_place = models.PositiveSmallIntegerField(choices=WinningPlaceChoices.choices)
-    student_event = models.ManyToManyField(Student, blank=True)
-    event_name = models.CharField(max_length=200)
-    event_area = models.PositiveSmallIntegerField(choices=EventAreaChoices)
-    event_level = models.PositiveSmallIntegerField(choices=EventLevelChoices)
-    academic_group = models.ForeignKey(AcademicGroup, on_delete=models.CASCADE)
+    name = models.CharField(max_length=30, verbose_name='Название')
+    prize_winning_place = models.PositiveSmallIntegerField(choices=WinningPlaceChoices.choices,
+                                                           verbose_name='Призовое место')
+    student_event = models.ManyToManyField(Student, blank=True, verbose_name='Студенты')
+    event_name = models.CharField(max_length=200, verbose_name='Название мероприятия')
+    event_area = models.PositiveSmallIntegerField(choices=EventAreaChoices,
+                                                  verbose_name='Область мероприятия')
+    event_level = models.PositiveSmallIntegerField(choices=EventLevelChoices,
+                                                   verbose_name='Уровень мероприятия')
+    academic_group = models.ForeignKey(AcademicGroup, on_delete=models.CASCADE,
+                                       verbose_name='Академическая группа')
 
     class Meta:
-        verbose_name = 'Группа события'
-        verbose_name_plural = 'Группы событий'
+        verbose_name = 'Группа мероприятия'
+        verbose_name_plural = 'Группы мероприятий'
 
     def __str__(self):
         return self.name
