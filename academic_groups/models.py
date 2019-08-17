@@ -19,6 +19,10 @@ class Exam(models.Model):
     """
     name = models.CharField(max_length=50)
 
+    class Meta:
+        verbose_name = 'Экзамен'
+        verbose_name_plural = 'Экзамены'
+
     def __str__(self):
         return self.name
 
@@ -31,6 +35,10 @@ class AcademicGroup(models.Model):
     starosta_phone_number = models.CharField(max_length=12, validators=[validate_telephone_number])
     exams = models.ManyToManyField(Exam, blank=True)
     curator = models.CharField(max_length=50)
+
+    class Meta:
+        verbose_name = 'Академическая группа'
+        verbose_name_plural = 'Академические группы'
 
     def __str__(self):
         return self.name
@@ -47,6 +55,10 @@ class Student(models.Model):
     academic_group = models.ForeignKey(AcademicGroup, on_delete=models.CASCADE)
     student_exam = models.ManyToManyField(Exam, through='ExamResult', through_fields=('student', 'exam'))
 
+    class Meta:
+        verbose_name = 'Студент'
+        verbose_name_plural = 'Студенты'
+
     @property
     def average_score(self):
         return self.student_exam.aggregate(average_score=Avg('examresult__score'))['average_score']
@@ -59,6 +71,10 @@ class ExamResult(models.Model):
     score = models.PositiveSmallIntegerField(default=0)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Результат экзамена'
+        verbose_name_plural = 'Результаты экзаменов'
 
     def __str__(self):
         return str(self.score)
@@ -94,6 +110,10 @@ class EventGroup(models.Model):
     event_area = models.PositiveSmallIntegerField(choices=EventAreaChoices)
     event_level = models.PositiveSmallIntegerField(choices=EventLevelChoices)
     academic_group = models.ForeignKey(AcademicGroup, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Группа события'
+        verbose_name_plural = 'Группы событий'
 
     def __str__(self):
         return self.name
