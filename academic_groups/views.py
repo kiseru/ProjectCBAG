@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import Http404
 from django.shortcuts import render, redirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views import generic
 
 from academic_groups.models import Exam, ExamResult, Student, AcademicGroup, EventGroup
@@ -21,43 +21,11 @@ class StudentDetailView(LoginRequiredMixin,
     model = Student
 
 
-def add_student(request):
-    user = request.user
-    academic_group = user.academicgroup
-
-    if request.method == 'GET':
-
-        context = {
-            'academic_group': academic_group,
-            'name': '{0} {1}'.format(user.first_name, user.last_name),
-        }
-
-        return render(request, 'academic_groups/add_student.html', context=context)
-    elif request.POST:
-        student = Student()
-
-        student.name = '{0} {1} {2}'.format(
-            request.POST['last_name'],
-            request.POST['first_name'],
-            request.POST['father_first_name'],
-        )
-
-        student.academic_group = academic_group
-        student.educational_form = request.POST['educational_form']
-        student.save()
-
-        exams = academic_group.exams.all()
-
-        for exam in exams:
-            exam_score = ExamResult()
-            exam_score.student = student
-            exam_score.exam = exam
-            exam_score.score = int(request.POST['{0}'.format(exam.id)])
-            exam_score.save()
-
-        return redirect(reverse("groups:students"))
-    else:
-        return Http404()
+class StudentCreateView(LoginRequiredMixin,
+                        generic.CreateView):
+    model = Student
+    fields = ('name', 'academic_group', 'educational_form', 'student_exam')
+    success_url = reverse_lazy('home')
 
 
 def edit_student_exams(request, student_id):

@@ -63,7 +63,11 @@ class Student(models.Model):
 
     @property
     def average_score(self):
-        return self.student_exam.aggregate(average_score=Avg('examresult__score'))['average_score']
+        average_score = self.student_exam.aggregate(average_score=Avg('examresult__score'))['average_score']
+        if average_score is not None:
+            return average_score
+        else:
+            return 0.0
 
     def __str__(self):
         return self.name

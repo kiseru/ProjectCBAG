@@ -7,6 +7,7 @@ app_name = 'groups'
 
 urlpatterns = [
     path('academic_groups/<int:pk>', views.AcademicGroupDetailView.as_view(), name='academicgroup_detail'),
+    path('students/new', views.StudentCreateView.as_view(), name='student_create'),
     path('students/<int:pk>', views.StudentDetailView.as_view(), name='student_detail'),
     url(r'^add_student/$', views.add_student, name='add_student'),
     url(r'^students/add_exam/$', views.add_exam, name='add_exam'),
