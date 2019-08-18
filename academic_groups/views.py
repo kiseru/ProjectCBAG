@@ -28,6 +28,12 @@ class StudentCreateView(LoginRequiredMixin,
     success_url = reverse_lazy('home')
 
 
+class StudentDeleteView(LoginRequiredMixin,
+                        generic.DeleteView):
+    model = Student
+    success_url = reverse_lazy('home')
+
+
 def edit_student_exams(request, student_id):
     if request.POST:
         student = Student.objects.get(pk=student_id)
@@ -43,15 +49,6 @@ def edit_student_exams(request, student_id):
         }))
     else:
         return Http404()
-
-
-def delete_student(request, student_id):
-    if request.POST:
-        student = Student.objects.get(pk=student_id)
-        student.delete()
-        return redirect(reverse('groups:students'))
-
-    return Http404()
 
 
 def add_exam(request):
