@@ -14,9 +14,6 @@ def validate_telephone_number(telephone_number):
 
 
 class Exam(models.Model):
-    """
-    List of exam
-    """
     name = models.CharField(max_length=50, verbose_name='Название')
 
     class Meta:

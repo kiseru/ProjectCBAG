@@ -24,8 +24,14 @@ class StudentDetailView(LoginRequiredMixin,
 class StudentCreateView(LoginRequiredMixin,
                         generic.CreateView):
     model = Student
-    fields = ('name', 'academic_group', 'educational_form', 'student_exam')
+    fields = ('name', 'academic_group', 'educational_form')
     success_url = reverse_lazy('home')
+
+    def post(self, request, *args, **kwargs):
+        response = super().post(request, *args, **kwargs)
+        for exam in self.object.academic_group.exams.all():
+            self.object.examresult_set.create(exam=exam)
+        return response
 
 
 class StudentDeleteView(LoginRequiredMixin,
