@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  {% include 'academic_groups/header.html' %}
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-0 mt-md-5">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-8 shadow p-2 p-md-4">
+        <table class="table table-hover table-bordered">
+          <thead class="thead-dark">
+          <tr>
+            <th>Экзамен</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          {% for exam in object_list %}
+            <tr>
+              <td class="align-middle">{{ exam }}</td>
+              <td class="text-center">
+                <a href="#" class="btn btn-danger btn-sm" role="button">Удалить</a>
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+
+        <div class="d-flex flex-column flex-md-row justify-content-end">
+          <a href="#" class="btn btn-primary" role="button">Добавить экзамен</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

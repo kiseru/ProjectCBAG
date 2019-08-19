@@ -1,10 +1,11 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.models import User
 from django.http import Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 
-from academic_groups.models import Exam, ExamResult, Student, AcademicGroup, EventGroup
+from academic_groups.models import ExamResult, Student, AcademicGroup, EventGroup
 
 
 class AcademicGroupDetailView(LoginRequiredMixin,
@@ -40,6 +41,12 @@ class StudentDeleteView(LoginRequiredMixin,
     success_url = reverse_lazy('home')
 
 
+class AcademicGroupExamListView(LoginRequiredMixin,
+                                generic.ListView):
+    def get_queryset(self):
+        return AcademicGroup.objects.get(pk=self.request.user.academicgroup.pk).exams.all()
+
+
 def edit_student_exams(request, student_id):
     if request.POST:
         student = Student.objects.get(pk=student_id)
@@ -55,22 +62,6 @@ def edit_student_exams(request, student_id):
         }))
     else:
         return Http404()
-
-
-def add_exam(request):
-    if request.POST:
-        exam = Exam.objects.get(pk=request.POST['exam_id'])
-
-        request.user.academicgroup.exams.add(exam)
-
-        for student in request.user.academicgroup.student_set.all():
-            exam_result = ExamResult()
-            exam_result.exam = exam
-            exam_result.student = student
-            exam_result.score = 0
-            exam_result.save()
-
-        return redirect(reverse('home'))
 
 
 def delete_exam(request):
