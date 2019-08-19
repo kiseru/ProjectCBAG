@@ -61,6 +61,12 @@ class AcademicGroupExamCreateView(LoginRequiredMixin,
         return super().form_valid(form)
 
 
+class AcademicGroupExamDeleteView(LoginRequiredMixin,
+                                  generic.DeleteView):
+    model = AcademicGroupExam
+    success_url = reverse_lazy('groups:exam_list')
+
+
 def edit_student_exams(request, student_id):
     if request.POST:
         student = Student.objects.get(pk=student_id)

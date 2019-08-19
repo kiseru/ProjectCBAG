@@ -65,7 +65,6 @@ class Student(models.Model):
     educational_form = models.PositiveSmallIntegerField(choices=EducationalFormChoices.choices,
                                                         verbose_name='Форма обучения')
     academic_group = models.ForeignKey(AcademicGroup, on_delete=models.CASCADE, verbose_name='Академическая группа')
-    student_exam = models.ManyToManyField(Exam, through='ExamResult', through_fields=('student', 'exam'))
 
     class Meta:
         verbose_name = 'Студент'
@@ -73,7 +72,7 @@ class Student(models.Model):
 
     @property
     def average_score(self):
-        average_score = self.student_exam.aggregate(average_score=Avg('examresult__score'))['average_score']
+        average_score = self.examresult_set.aggregate(average_score=Avg('score'))['average_score']
         if average_score is not None:
             return average_score
         else:
@@ -86,7 +85,8 @@ class Student(models.Model):
 class ExamResult(models.Model):
     score = models.PositiveSmallIntegerField(default=0, verbose_name='Баллы')
     student = models.ForeignKey(Student, on_delete=models.CASCADE, verbose_name='Студент')
-    exam = models.ForeignKey(Exam, on_delete=models.CASCADE, verbose_name='Экзамен')
+    academic_group_exam = models.ForeignKey(AcademicGroupExam, on_delete=models.CASCADE,
+                                            verbose_name='Экзамен академической группы')
 
     class Meta:
         verbose_name = 'Результат экзамена'

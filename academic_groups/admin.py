@@ -80,3 +80,8 @@ class EventAdmin(admin.ModelAdmin):
     list_display = ('name', 'area', 'level')
     list_filter = ('area', 'level')
     search_fields = ('name',)
+
+
+@admin.register(models.ExamResult)
+class ExamResult(admin.ModelAdmin):
+    pass
