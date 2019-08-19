@@ -31,7 +31,7 @@ class StudentCreateView(LoginRequiredMixin,
 
     def post(self, request, *args, **kwargs):
         response = super().post(request, *args, **kwargs)
-        for exam in self.object.academic_group.exams.all():
+        for exam in self.object.academic_group.academicgroupexam_set.all():
             self.object.examresult_set.create(exam=exam)
         return response
 
@@ -58,6 +58,8 @@ class AcademicGroupExamCreateView(LoginRequiredMixin,
         self.object = form.save(commit=False)
         self.object.academic_group = self.request.user.academicgroup
         self.object.save()
+        for student in self.object.academic_group.student_set.all():
+            ExamResult.objects.create(student=student, academic_group_exam=self.object)
         return super().form_valid(form)
 
 
