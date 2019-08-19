@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
+from django.forms import ModelForm
 from django.http import Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
@@ -45,6 +46,19 @@ class AcademicGroupExamListView(LoginRequiredMixin,
                                 generic.ListView):
     def get_queryset(self):
         return AcademicGroup.objects.get(pk=self.request.user.academicgroup.pk).academicgroupexam_set.all()
+
+
+class AcademicGroupExamCreateView(LoginRequiredMixin,
+                                  generic.CreateView):
+    model = AcademicGroupExam
+    fields = ('exam',)
+    success_url = reverse_lazy('groups:exam_list')
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.academic_group = self.request.user.academicgroup
+        self.object.save()
+        return super().form_valid(form)
 
 
 def edit_student_exams(request, student_id):

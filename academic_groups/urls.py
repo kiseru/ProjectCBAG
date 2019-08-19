@@ -11,6 +11,7 @@ urlpatterns = [
     path('students/<int:pk>/delete', views.StudentDeleteView.as_view(), name='student_delete'),
     path('students/<int:pk>', views.StudentDetailView.as_view(), name='student_detail'),
     path('exams/', views.AcademicGroupExamListView.as_view(), name='exam_list'),
+    path('exams/new', views.AcademicGroupExamCreateView.as_view(), name='exam_create'),
     url(r'^student/(?P<student_id>[0-9]+)/edit_student_exams/$', views.edit_student_exams, name='edit_student_exams'),
     url(r'^students/delete_exam/', views.delete_exam, name='delete_exam'),
     url(r'^events/$', views.events, name='events'),
