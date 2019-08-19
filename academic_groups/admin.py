@@ -8,6 +8,11 @@ class StudentInline(admin.TabularInline):
     extra = 0
 
 
+class AcademicGroupExamInline(admin.TabularInline):
+    model = models.AcademicGroupExam
+    extra = 0
+
+
 @admin.register(models.AcademicGroup)
 class AcademicGroupAdmin(admin.ModelAdmin):
     list_display = [
@@ -27,6 +32,7 @@ class AcademicGroupAdmin(admin.ModelAdmin):
 
     inlines = [
         StudentInline,
+        AcademicGroupExamInline
     ]
 
 

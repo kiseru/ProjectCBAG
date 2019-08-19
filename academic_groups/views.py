@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 
-from academic_groups.models import ExamResult, Student, AcademicGroup, EventGroup
+from academic_groups.models import ExamResult, Student, AcademicGroup, EventGroup, AcademicGroupExam
 
 
 class AcademicGroupDetailView(LoginRequiredMixin,
@@ -44,7 +44,7 @@ class StudentDeleteView(LoginRequiredMixin,
 class AcademicGroupExamListView(LoginRequiredMixin,
                                 generic.ListView):
     def get_queryset(self):
-        return AcademicGroup.objects.get(pk=self.request.user.academicgroup.pk).exams.all()
+        return AcademicGroup.objects.get(pk=self.request.user.academicgroup.pk).academicgroupexam_set.all()
 
 
 def edit_student_exams(request, student_id):

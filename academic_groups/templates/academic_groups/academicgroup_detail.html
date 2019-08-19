@@ -13,12 +13,12 @@
       <thead class="thead-dark bg-primary">
       <tr class="bg-primary">
         <th rowspan="2" scope="col">Студент</th>
-        <th colspan="{{ object.exams.count }}" scope="col">Экзамены</th>
+        <th colspan="{{ object.academicgroupexam_set.count }}" scope="col">Экзамены</th>
         <th rowspan="2" scope="col">Средний балл</th>
       </tr>
       <tr>
-        {% for exam in object.exams.all %}
-          <th>{{ exam.name }}</th>
+        {% for academic_group_exam in object.academicgroupexam_set.all %}
+          <th>{{ academic_group_exam.exam.name }}</th>
         {% endfor %}
       </tr>
       </thead>

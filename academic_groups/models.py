@@ -31,7 +31,7 @@ class AcademicGroup(models.Model):
     starosta = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='Староста')
     starosta_phone_number = models.CharField(max_length=12, validators=[validate_telephone_number],
                                              verbose_name='Номер старосты')
-    exams = models.ManyToManyField(Exam, blank=True, verbose_name='Экзамены')
+    # exams = models.ManyToManyField(Exam, blank=True, verbose_name='Экзамены')
     curator = models.CharField(max_length=50, verbose_name='Куратор')
 
     class Meta:
@@ -40,6 +40,18 @@ class AcademicGroup(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class AcademicGroupExam(models.Model):
+    academic_group = models.ForeignKey(AcademicGroup, on_delete=models.CASCADE, verbose_name='Академическая группа')
+    exam = models.ForeignKey(Exam, on_delete=models.CASCADE, verbose_name='Экзамен')
+
+    class Meta:
+        verbose_name = 'Экзамен академической группы'
+        verbose_name_plural = 'Экзамены академичских групп'
+
+    def __str__(self):
+        return f'{self.academic_group.name} - {self.exam.name}'
 
 
 class EducationalFormChoices(djchoices.DjangoChoices):
