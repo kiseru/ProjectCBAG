@@ -49,6 +49,7 @@ class AcademicGroupExam(models.Model):
     class Meta:
         verbose_name = 'Экзамен академической группы'
         verbose_name_plural = 'Экзамены академичских групп'
+        unique_together = ('academic_group', 'exam')
 
     def __str__(self):
         return f'{self.academic_group.name} - {self.exam.name}'
