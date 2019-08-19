@@ -1,6 +1,4 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.contrib.auth.models import User
-from django.forms import ModelForm
 from django.http import Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
@@ -32,7 +30,7 @@ class StudentCreateView(LoginRequiredMixin,
     def post(self, request, *args, **kwargs):
         response = super().post(request, *args, **kwargs)
         for exam in self.object.academic_group.academicgroupexam_set.all():
-            self.object.examresult_set.create(exam=exam)
+            self.object.examresult_set.create(academic_group_exam=exam)
         return response
 
 
