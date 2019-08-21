@@ -84,21 +84,6 @@ def edit_student_exams(request, student_id):
         return Http404()
 
 
-def delete_exam(request):
-    if request.POST:
-        academic_group = request.user.academicgroup
-        academic_group.exams.remove(request.POST['exam_id'])
-        academic_group.save()
-
-        for student in academic_group.student_set.all():
-            student_exam = ExamResult.objects.filter(student_id=student.id, exam_id=request.POST['exam_id'])
-            student_exam.delete()
-
-        return redirect(reverse('groups:students'))
-
-    return Http404()
-
-
 def events(request):
     context = {
         'academic_group': request.user.academicgroup,
