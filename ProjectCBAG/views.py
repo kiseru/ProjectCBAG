@@ -3,9 +3,10 @@ from django.urls import reverse
 from django.views import generic
 
 
-class HomeView(
-               generic.View):
+class HomeView(generic.View):
     def get(self, request):
+        if not request.user.is_authenticated:
+            return redirect(reverse('auth:login'))
         group_name = request.user.groups.get().name
         if group_name == 'headman':
             return redirect(reverse('groups:academicgroup_detail', args=(request.user.academicgroup.pk,)))
